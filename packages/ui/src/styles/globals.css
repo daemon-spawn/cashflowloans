@@ -105,8 +105,9 @@
   --color-ring: var(--ring);
 
   /* Fonts are loaded per app with next/font and exposed as these variables. */
-  --font-display: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  /* One family (DM Sans): light and tight at display sizes, regular for reading. */
+  --font-display: var(--font-dm), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm), ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

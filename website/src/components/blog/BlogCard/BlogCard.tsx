@@ -7,7 +7,7 @@ import { formatDate } from "@/lib/format-date";
 export function BlogCard({ post }: { post: BlogPost }) {
   return (
     <article className="group relative flex flex-col">
-      <div className="relative aspect-[3/2] overflow-hidden rounded-xl">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem]">
         <Image
           src={post.image}
           alt={post.imageAlt}
@@ -16,10 +16,10 @@ export function BlogCard({ post }: { post: BlogPost }) {
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
         />
       </div>
-      <p className="t-meta text-muted-foreground mt-5">
+      <p className="text-muted-foreground mt-5 text-sm">
         <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
       </p>
-      <h3 className="t-h3 mt-2 text-[1.3125rem]">
+      <h3 className="t-h3 mt-2 text-[1.375rem]">
         <Link href={`/blog/${post.slug}`} className="after:absolute after:inset-0 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">
           {post.title}
         </Link>

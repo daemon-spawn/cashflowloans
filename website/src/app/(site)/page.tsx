@@ -1,5 +1,5 @@
 import { HomeHero } from "@/components/sections/HomeHero";
-import { TrustStrip } from "@/components/sections/TrustStrip";
+import { Stats } from "@/components/sections/Stats";
 import { CompanyIntro } from "@/components/sections/CompanyIntro";
 import { LoanRoutes } from "@/components/sections/LoanRoutes";
 import { HowItWorks } from "@/components/sections/HowItWorks";
@@ -12,15 +12,15 @@ import { FaqPreview } from "@/components/sections/FaqPreview";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getFaqs, getPosts, getTestimonials } from "@/lib/content";
 
-// Section order: design brief (Gate 3) plus the original homepage's Company
-// Introductions, All Loans Services, Why Choose Us, blog row and full FAQ.
+// Editorial layout: full-screen hero with the calculator, the offer in four
+// figures, then the original homepage content as alternating panels.
 export default async function HomePage() {
   const [faqs, testimonials, posts] = await Promise.all([getFaqs(), getTestimonials(), getPosts(6)]);
 
   return (
     <>
       <HomeHero />
-      <TrustStrip />
+      <Stats />
       <CompanyIntro />
       <LoanRoutes />
       <HowItWorks />

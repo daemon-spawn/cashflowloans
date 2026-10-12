@@ -21,13 +21,13 @@ export function CostTable() {
     <section className="py-20 sm:py-28">
       <Container className="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
         <div className="lg:col-span-5">
-          <SectionHeading eyebrow="What it costs" title="One fee, shown before you apply" />
+          <SectionHeading eyebrow="What it costs" title="One fee," highlight="shown before you apply" />
           <dl className="border-border mt-10 border-t">
             {terms.map((t) => (
-              <div key={t.label} className="border-border grid grid-cols-[6.5rem_minmax(0,1fr)] gap-5 border-b py-6">
-                <dt className="font-display text-brand-900 text-[2.25rem] leading-none font-bold tracking-tight">{t.figure}</dt>
+              <div key={t.label} className="border-border grid grid-cols-[7.5rem_minmax(0,1fr)] items-start gap-5 border-b py-7">
+                <dt className="t-numeral text-brand-900 text-[3rem]">{t.figure}</dt>
                 <dd>
-                  <p className="font-semibold">{t.label}</p>
+                  <p className="font-medium">{t.label}</p>
                   <p className="text-muted-foreground mt-1 text-[0.9375rem]">{t.detail}</p>
                 </dd>
               </div>
@@ -35,13 +35,13 @@ export function CostTable() {
           </dl>
         </div>
 
-        <figure className="bg-card border-border overflow-hidden rounded-2xl border lg:col-span-7 lg:self-start">
+        <figure className="bg-card overflow-hidden rounded-[2rem] lg:col-span-7 lg:self-start">
           <div className="relative aspect-[21/8]">
             <Image src={coins} alt="Rand coins stacked on bank notes" fill placeholder="blur" sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
             <div className="from-brand-950/80 absolute inset-0 bg-gradient-to-t to-transparent" />
             <figcaption className="absolute bottom-5 left-6 text-white">
               <span className="t-meta text-gold">Example repayments</span>
-              <span className="mt-1 block font-semibold">What you pay back after {loanRules.termMonths} month</span>
+              <span className="mt-1 block font-medium">What you pay back after {loanRules.termMonths} month</span>
             </figcaption>
           </div>
           <div className="overflow-x-auto">
@@ -60,7 +60,7 @@ export function CostTable() {
                     <tr key={amount} className="border-border border-b last:border-0">
                       <td className="px-5 py-4 text-lg font-medium sm:px-7">{formatRand(amount)}</td>
                       <td className="text-muted-foreground px-5 py-4 sm:px-7">+ {formatRand(fee)}</td>
-                      <td className="bg-gold/10 px-5 py-4 text-right text-xl font-bold sm:px-7">{formatRand(total)}</td>
+                      <td className="bg-gold/10 px-5 py-4 text-right text-xl font-semibold sm:px-7">{formatRand(total)}</td>
                     </tr>
                   );
                 })}

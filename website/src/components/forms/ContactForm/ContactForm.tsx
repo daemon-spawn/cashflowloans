@@ -29,7 +29,7 @@ export function ContactForm() {
   };
 
   if (status === "sent") {
-    return <p role="status" className="bg-brand-50 text-brand-900 rounded-xl p-6">Thanks — we&apos;ll get back to you shortly.</p>;
+    return <p role="status" className="bg-sage text-brand-900 rounded-xl p-6">Thanks — we&apos;ll get back to you shortly.</p>;
   }
 
   return (

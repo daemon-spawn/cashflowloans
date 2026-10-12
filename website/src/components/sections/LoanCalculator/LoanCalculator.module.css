@@ -11,13 +11,13 @@
 .range::-webkit-slider-runnable-track {
   height: 0.5rem;
   border-radius: 9999px;
-  background: linear-gradient(to right, var(--brand-900) var(--fill), var(--brand-100) var(--fill));
+  background: linear-gradient(to right, var(--brand-900) var(--fill), var(--sage) var(--fill));
 }
 
 .range::-moz-range-track {
   height: 0.5rem;
   border-radius: 9999px;
-  background: var(--brand-100);
+  background: var(--sage);
 }
 
 .range::-moz-range-progress {
@@ -32,7 +32,7 @@
   height: 1.75rem;
   margin-top: -0.625rem;
   border-radius: 9999px;
-  background: var(--marigold);
+  background: var(--gold);
   border: 2px solid var(--brand-950);
   box-shadow: 0 2px 6px rgb(13 42 33 / 0.3);
 }
@@ -41,7 +41,7 @@
   width: 1.75rem;
   height: 1.75rem;
   border-radius: 9999px;
-  background: var(--marigold);
+  background: var(--gold);
   border: 2px solid var(--brand-950);
 }
 
@@ -50,11 +50,11 @@
 }
 
 .range:focus-visible::-webkit-slider-thumb {
-  outline: 3px solid var(--marigold);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
 .range:focus-visible::-moz-range-thumb {
-  outline: 3px solid var(--marigold);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }

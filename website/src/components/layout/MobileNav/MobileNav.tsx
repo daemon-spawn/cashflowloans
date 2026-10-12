@@ -33,7 +33,7 @@ export function MobileNav() {
         {open ? <X className="size-6" /> : <Menu className="size-6" />}
       </Button>
       {open && (
-        <nav id="mobile-menu" aria-label="Main" className="bg-brand-950 absolute inset-x-0 top-full border-b border-white/10 px-4 pt-2 pb-6 text-white shadow-lg">
+        <nav id="mobile-menu" aria-label="Main" data-surface="dark" className="bg-brand-950 absolute inset-x-0 top-full border-b border-white/10 px-4 pt-2 pb-6 text-white shadow-lg">
           <ul className="divide-y divide-white/10">
             {navigation.map((item) => (
               <li key={item.href}>
@@ -44,7 +44,7 @@ export function MobileNav() {
             ))}
           </ul>
           <div className="mt-4 grid gap-3">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="inverse">
               <Link href={primaryCta.href} onClick={() => setOpen(false)}>{primaryCta.label}</Link>
             </Button>
             <Button asChild size="lg" variant="onDark">

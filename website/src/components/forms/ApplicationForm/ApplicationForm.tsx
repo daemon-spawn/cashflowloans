@@ -64,7 +64,7 @@ export function ApplicationForm({ defaultType = "unsecured", defaultAmount }: Pr
 
   if (result) {
     return (
-      <div role="status" className="bg-brand-50 text-brand-900 rounded-2xl p-8">
+      <div role="status" className="bg-sage text-brand-900 rounded-2xl p-8">
         <h2 className="text-2xl font-semibold">Application received</h2>
         <p className="mt-2">Your reference is <strong>{result.reference}</strong>. We&apos;ll be in touch shortly.</p>
       </div>

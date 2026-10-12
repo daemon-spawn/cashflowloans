@@ -13,7 +13,7 @@ export function MobileActionBar() {
   const onApply = usePathname().startsWith(primaryCta.href);
 
   return (
-    <div className="bg-mist/95 border-border fixed inset-x-0 bottom-0 z-40 border-t px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] backdrop-blur-md md:hidden">
+    <div className="bg-ivory/95 border-border fixed inset-x-0 bottom-0 z-40 border-t px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] backdrop-blur-md md:hidden">
       <div className="flex gap-3">
         {!onApply && (
           <Button asChild size="lg" className="flex-1">

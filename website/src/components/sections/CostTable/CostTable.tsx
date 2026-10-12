@@ -40,7 +40,7 @@ export function CostTable() {
             <Image src={coins} alt="Rand coins stacked on bank notes" fill placeholder="blur" sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
             <div className="from-brand-950/80 absolute inset-0 bg-gradient-to-t to-transparent" />
             <figcaption className="absolute bottom-5 left-6 text-white">
-              <span className="t-meta text-brand-300">Example repayments</span>
+              <span className="t-meta text-gold">Example repayments</span>
               <span className="mt-1 block font-semibold">What you pay back after {loanRules.termMonths} month</span>
             </figcaption>
           </div>
@@ -50,7 +50,7 @@ export function CostTable() {
                 <tr className="border-border border-b">
                   <th scope="col" className="t-meta text-muted-foreground px-5 py-4 font-semibold whitespace-nowrap sm:px-7">You borrow</th>
                   <th scope="col" className="t-meta text-muted-foreground px-5 py-4 font-semibold whitespace-nowrap sm:px-7">Fee</th>
-                  <th scope="col" className="t-meta text-brand-950 bg-marigold/20 px-5 py-4 text-right font-semibold whitespace-nowrap sm:px-7">You repay</th>
+                  <th scope="col" className="t-meta text-brand-950 bg-gold/25 px-5 py-4 text-right font-semibold whitespace-nowrap sm:px-7">You repay</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,7 +60,7 @@ export function CostTable() {
                     <tr key={amount} className="border-border border-b last:border-0">
                       <td className="px-5 py-4 text-lg font-medium sm:px-7">{formatRand(amount)}</td>
                       <td className="text-muted-foreground px-5 py-4 sm:px-7">+ {formatRand(fee)}</td>
-                      <td className="bg-marigold/10 px-5 py-4 text-right text-xl font-bold sm:px-7">{formatRand(total)}</td>
+                      <td className="bg-gold/10 px-5 py-4 text-right text-xl font-bold sm:px-7">{formatRand(total)}</td>
                     </tr>
                   );
                 })}

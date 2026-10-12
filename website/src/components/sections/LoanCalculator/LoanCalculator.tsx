@@ -49,8 +49,8 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
             <label
               key={t.value}
               className={cn(
-                "has-focus-visible:outline-marigold cursor-pointer rounded-lg border px-3 py-2.5 transition-colors has-focus-visible:outline-3 has-focus-visible:outline-offset-2",
-                type === t.value ? "border-brand-900 bg-brand-50" : "border-border hover:border-input",
+                "has-focus-visible:outline-[var(--focus)] cursor-pointer rounded-lg border px-3 py-2.5 transition-colors has-focus-visible:outline-3 has-focus-visible:outline-offset-2",
+                type === t.value ? "border-brand-900 bg-sage" : "border-border hover:border-input",
               )}
             >
               <input type="radio" name="calc-type" value={t.value} checked={type === t.value} onChange={() => setType(t.value)} className="sr-only" />
@@ -97,7 +97,7 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
           <dt className="text-muted-foreground">Fee ({loanRules.feeRate * 100}%, {loanRules.termMonths} month)</dt>
           <dd className="t-num">{formatRand(fee)}</dd>
         </div>
-        <div className="bg-marigold/25 -mx-3 mt-2 flex items-baseline justify-between gap-4 rounded-lg px-3 py-3">
+        <div className="bg-gold/20 -mx-3 mt-2 flex items-baseline justify-between gap-4 rounded-lg px-3 py-3">
           <dt className="font-semibold">You repay</dt>
           <dd className="font-display t-num text-2xl font-bold">
             <AnimatedNumber value={total} format={formatRand} />

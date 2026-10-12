@@ -29,12 +29,12 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   return (
     <>
       <article>
-        <header className="bg-brand-950 text-white">
+        <header data-surface="dark" className="bg-brand-950 text-white">
           <Container className="max-w-4xl pt-14 pb-40 sm:pt-20">
             <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white">
               <ArrowLeft className="size-4" aria-hidden /> All articles
             </Link>
-            <p className="t-meta text-brand-300 mt-8">
+            <p className="t-meta text-gold mt-8">
               <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
             </p>
             <h1 className="t-h2 mt-3 text-[clamp(2rem,1.4rem+2.6vw,3.25rem)]">{post.title}</h1>

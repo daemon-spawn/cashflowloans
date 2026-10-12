@@ -10,43 +10,51 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Palette (signed off in docs/design/design-brief.html):
- * ~60% mist neutral, ~30% deep green bands, ~10% marigold — reserved for the
- * primary action and the repayment figure, never decoration.
+ * Palette (client-approved colour system):
+ *   Money green #1B4D3E: primary brand. Links, buttons, headings on light backgrounds.
+ *   Deep green  #0D2A21: hero, footer, dark feature sections.
+ *   Warm ivory  #F7F6F0: main page background.
+ *   Soft sage   #DFEAE1: supporting sections and secondary content areas.
+ *   Muted gold  #D9A45B: small highlights, decorative details, selected indicators.
+ *                        Never large text areas; on light backgrounds use dark text on it
+ *                        (gold text on ivory is only 2.1:1, gold on deep green is 6.9:1).
  */
 :root {
-  --mist: #f2f5f3;
+  --ivory: #f7f6f0;
+  --sage: #dfeae1;
+  --gold: #d9a45b;
   --ink: #0f1f1a;
-  --brand-950: #0d2a21; /* deep green: dark bands, footer */
-  --brand-900: #1b4d3e; /* money green: brand, links */
-  --brand-700: #24684f;
-  --brand-500: #2e8b57;
-  --brand-300: #98c9a3; /* mint: detail on dark */
-  --brand-100: #dcebe1;
-  --brand-50: #eaf2ed;
-  --marigold: #f2b437;
-  --marigold-hover: #f5c35c;
+  --brand-950: #0d2a21; /* deep green */
+  --brand-900: #1b4d3e; /* money green */
+  --brand-700: #24684f; /* hover state for money green */
+
+  /* Focus outline: money green on light surfaces; [data-surface="dark"] switches it to gold. */
+  --focus: var(--brand-900);
 
   --radius: 0.625rem;
 
-  --background: var(--mist);
+  --background: var(--ivory);
   --foreground: var(--ink);
   --card: #ffffff;
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);
-  --primary: var(--marigold);
-  --primary-foreground: var(--brand-950);
-  --secondary: var(--brand-50);
+  --primary: var(--brand-900);
+  --primary-foreground: #ffffff;
+  --secondary: var(--sage);
   --secondary-foreground: var(--brand-900);
-  --muted: #e6ece9;
+  --muted: #ecebe3;
   --muted-foreground: #55665f;
-  --accent: var(--brand-50);
+  --accent: var(--sage);
   --accent-foreground: var(--brand-900);
   --destructive: #b42318;
-  --border: #d9e1dd;
-  --input: #c5d0cb;
+  --border: #e2e0d6;
+  --input: #cfccc0;
   --ring: var(--brand-900);
+}
+
+[data-surface="dark"] {
+  --focus: var(--gold);
 }
 
 .dark {
@@ -65,21 +73,17 @@
   --destructive: #f2877c;
   --border: #22352e;
   --input: #2a3f37;
-  --ring: var(--marigold);
+  --ring: var(--gold);
 }
 
 @theme inline {
-  --color-mist: var(--mist);
+  --color-ivory: var(--ivory);
+  --color-sage: var(--sage);
+  --color-gold: var(--gold);
   --color-ink: var(--ink);
-  --color-marigold: var(--marigold);
-  --color-marigold-hover: var(--marigold-hover);
   --color-brand-950: var(--brand-950);
   --color-brand-900: var(--brand-900);
   --color-brand-700: var(--brand-700);
-  --color-brand-500: var(--brand-500);
-  --color-brand-300: var(--brand-300);
-  --color-brand-100: var(--brand-100);
-  --color-brand-50: var(--brand-50);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

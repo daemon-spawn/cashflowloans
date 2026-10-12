@@ -1,0 +1,7 @@
+@import "@cashflow/ui/globals.css";
+
+/* Let Tailwind see class names used in this app and in shared packages. */
+@source "../";
+
+@import "lenis/dist/lenis.css";
+@import "../styles/typography.css";

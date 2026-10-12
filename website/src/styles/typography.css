@@ -1,0 +1,65 @@
+/*
+ * Type roles (design brief, Gate 5). Use these instead of ad-hoc sizes so the
+ * hierarchy stays consistent: display → h2 → h3 → lead/body → meta.
+ */
+@utility t-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+@utility t-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+@utility t-h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+@utility t-lead {
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+@utility t-meta {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Single amounts: proportional lining figures (tabular adds gaps in display sizes). */
+@utility t-num {
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+/* Columns of amounts that must align. */
+@utility t-tab {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+@layer base {
+  body {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  :focus-visible {
+    outline: 3px solid var(--marigold);
+    outline-offset: 2px;
+  }
+}

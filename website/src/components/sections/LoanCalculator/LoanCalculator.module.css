@@ -1,0 +1,60 @@
+/* Custom range track: the filled part shows the chosen amount at a glance. */
+.range {
+  appearance: none;
+  width: 100%;
+  height: 2.75rem; /* comfortable touch target */
+  margin: 0.25rem 0 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--brand-900) var(--fill), var(--brand-100) var(--fill));
+}
+
+.range::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--brand-100);
+}
+
+.range::-moz-range-progress {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--brand-900);
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: -0.625rem;
+  border-radius: 9999px;
+  background: var(--marigold);
+  border: 2px solid var(--brand-950);
+  box-shadow: 0 2px 6px rgb(13 42 33 / 0.3);
+}
+
+.range::-moz-range-thumb {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: var(--marigold);
+  border: 2px solid var(--brand-950);
+}
+
+.range:focus-visible {
+  outline: none;
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid var(--marigold);
+  outline-offset: 3px;
+}
+
+.range:focus-visible::-moz-range-thumb {
+  outline: 3px solid var(--marigold);
+  outline-offset: 3px;
+}

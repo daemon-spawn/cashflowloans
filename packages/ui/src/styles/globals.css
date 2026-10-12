@@ -1,0 +1,120 @@
+/*
+ * Shared design tokens for the website and CRM.
+ * Brand: money green. Apps import this file, then add their own layer on top.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@source "../components";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Palette (signed off in docs/design/design-brief.html):
+ * ~60% mist neutral, ~30% deep green bands, ~10% marigold — reserved for the
+ * primary action and the repayment figure, never decoration.
+ */
+:root {
+  --mist: #f2f5f3;
+  --ink: #0f1f1a;
+  --brand-950: #0d2a21; /* deep green: dark bands, footer */
+  --brand-900: #1b4d3e; /* money green: brand, links */
+  --brand-700: #24684f;
+  --brand-500: #2e8b57;
+  --brand-300: #98c9a3; /* mint: detail on dark */
+  --brand-100: #dcebe1;
+  --brand-50: #eaf2ed;
+  --marigold: #f2b437;
+  --marigold-hover: #f5c35c;
+
+  --radius: 0.625rem;
+
+  --background: var(--mist);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--marigold);
+  --primary-foreground: var(--brand-950);
+  --secondary: var(--brand-50);
+  --secondary-foreground: var(--brand-900);
+  --muted: #e6ece9;
+  --muted-foreground: #55665f;
+  --accent: var(--brand-50);
+  --accent-foreground: var(--brand-900);
+  --destructive: #b42318;
+  --border: #d9e1dd;
+  --input: #c5d0cb;
+  --ring: var(--brand-900);
+}
+
+.dark {
+  --background: #0b1512;
+  --foreground: #e8f0ec;
+  --card: #111e1a;
+  --card-foreground: var(--foreground);
+  --popover: #111e1a;
+  --popover-foreground: var(--foreground);
+  --secondary: #183329;
+  --secondary-foreground: var(--foreground);
+  --muted: #16231f;
+  --muted-foreground: #9db0a8;
+  --accent: #183329;
+  --accent-foreground: var(--foreground);
+  --destructive: #f2877c;
+  --border: #22352e;
+  --input: #2a3f37;
+  --ring: var(--marigold);
+}
+
+@theme inline {
+  --color-mist: var(--mist);
+  --color-ink: var(--ink);
+  --color-marigold: var(--marigold);
+  --color-marigold-hover: var(--marigold-hover);
+  --color-brand-950: var(--brand-950);
+  --color-brand-900: var(--brand-900);
+  --color-brand-700: var(--brand-700);
+  --color-brand-500: var(--brand-500);
+  --color-brand-300: var(--brand-300);
+  --color-brand-100: var(--brand-100);
+  --color-brand-50: var(--brand-50);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Fonts are loaded per app with next/font and exposed as these variables. */
+  --font-display: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

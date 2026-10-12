@@ -1,0 +1,48 @@
+# Render Blueprint — API + Postgres. Website and CRM deploy on Vercel.
+# Paid "starter" plans: the free tier sleeps, and a sleeping API is what
+# silently lost applications on the old site.
+services:
+  - type: web
+    name: cashflow-api
+    runtime: python
+    rootDir: backend
+    plan: starter
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    preDeployCommand: flask --app wsgi db upgrade
+    startCommand: gunicorn wsgi:app --workers 2 --timeout 60 --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.1
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cashflow-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: STORAGE_BACKEND
+        value: supabase
+      - key: CORS_ORIGINS
+        value: https://cashflowloans.co.za,https://www.cashflowloans.co.za,https://crm.cashflowloans.co.za
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STAFF_EMAILS
+        sync: false
+      - key: TURNSTILE_SECRET_KEY
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+
+databases:
+  - name: cashflow-db
+    plan: basic-256mb
+    region: frankfurt
+    databaseName: cashflow
+    user: cashflow

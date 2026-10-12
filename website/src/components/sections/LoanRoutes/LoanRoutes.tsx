@@ -1,0 +1,71 @@
+import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { formatRand, loanRules } from "@cashflow/core";
+
+import { Container } from "@/components/shared/Container";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import phone from "@public/images/applying-on-phone.jpeg";
+import carKeys from "@public/images/car-keys-handover.jpeg";
+
+type Route = {
+  name: string;
+  summary: string;
+  needs: string[];
+  href: string;
+  cta: string;
+  image: StaticImageData;
+  alt: string;
+};
+
+const routes: Route[] = [
+  {
+    name: "Unsecured loan",
+    summary: "For people with a regular income. Nothing to hand over.",
+    needs: ["Your SA ID", "Latest payslip", "3-month bank statement (PDF)", "A DebiCheck debit order with your bank"],
+    href: "/how-it-works/unsecured",
+    cta: "How unsecured loans work",
+    image: phone,
+    alt: "Applying for a loan on a phone",
+  },
+  {
+    name: "Secured loan",
+    summary: `From ${formatRand(loanRules.securedMinAmount)}, using your phone, car or property as security.`,
+    needs: ["Your SA ID", "Photos of your item, car title or property papers", "Free courier collection, nationwide", "Insured while we hold it"],
+    href: "/how-it-works/secured",
+    cta: "How secured loans work",
+    image: carKeys,
+    alt: "Car keys being handed to a smiling driver",
+  },
+];
+
+/** Routes the visitor to the right product by what they have (design brief, Gate 3). */
+export function LoanRoutes() {
+  return (
+    <section className="py-20 sm:py-28">
+      <Container>
+        <SectionHeading eyebrow="Two ways to borrow" title="Pick the loan that fits what you have" />
+        <div className="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2">
+          {routes.map((r) => (
+            <article key={r.name} className="flex flex-col">
+              <div className="relative aspect-[3/2] overflow-hidden rounded-xl">
+                <Image src={r.image} alt={r.alt} fill placeholder="blur" sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
+              </div>
+              <h3 className="t-h3 mt-7 text-[1.625rem]">{r.name}</h3>
+              <p className="text-muted-foreground mt-2">{r.summary}</p>
+              <ul className="border-border mt-6 border-t">
+                {r.needs.map((n) => (
+                  <li key={n} className="border-border border-b py-3">{n}</li>
+                ))}
+              </ul>
+              <Link href={r.href} className="text-brand-900 group mt-6 inline-flex items-center gap-2 self-start font-semibold underline-offset-4 hover:underline">
+                {r.cta}
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </Link>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}

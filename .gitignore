@@ -1,1 +1,29 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+instance/
+
+# env & secrets — never commit real values; use .env.example
 .env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+.vercel
+coverage/
+uploads/
+*.db

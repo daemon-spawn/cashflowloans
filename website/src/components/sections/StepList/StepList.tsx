@@ -1,13 +1,16 @@
 export type Step = { title: string; description: string };
 
+/** A real sequence, so each step carries an oversized numeral. */
 export function StepList({ steps }: { steps: readonly Step[] }) {
   return (
-    <ol className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <ol>
       {steps.map((step, i) => (
-        <li key={step.title} className="rounded-2xl border p-6">
-          <span className="bg-sage text-brand-900 grid size-10 place-items-center rounded-full font-semibold">{i + 1}</span>
-          <h3 className="mt-4 font-semibold">{step.title}</h3>
-          <p className="text-muted-foreground mt-2 text-sm">{step.description}</p>
+        <li key={step.title} className="border-brand-900/15 grid grid-cols-[5.5rem_minmax(0,1fr)] items-start gap-6 border-t py-9 sm:grid-cols-[8rem_minmax(0,1fr)]">
+          <span className="t-numeral text-brand-900 text-[clamp(3.5rem,2.8rem+2.4vw,5.5rem)]">{String(i + 1).padStart(2, "0")}</span>
+          <div className="pt-2">
+            <h3 className="t-h3 text-[1.5rem]">{step.title}</h3>
+            <p className="text-ink/70 mt-2 max-w-[42ch]">{step.description}</p>
+          </div>
         </li>
       ))}
     </ol>

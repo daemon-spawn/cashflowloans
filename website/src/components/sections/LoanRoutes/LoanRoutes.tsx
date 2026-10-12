@@ -1,10 +1,13 @@
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Button } from "@cashflow/ui/components/button";
 import { formatRand, loanRules } from "@cashflow/core";
 
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { primaryCta } from "@/lib/site";
+import logoAlt from "@public/images/logo-alt.jpeg";
 import approved from "@public/images/personal-loan-approved.jpg";
 import phone from "@public/images/applying-on-phone.jpeg";
 
@@ -39,13 +42,32 @@ const routes: Route[] = [
   },
 ];
 
-/** Routes the visitor to the right product by what they have (design brief, Gate 3). */
+/**
+ * "What We're Offering / All Loans Services" from the original homepage: the
+ * Personal Loan card (copy and image unchanged), then the two ways to borrow.
+ */
 export function LoanRoutes() {
   return (
     <section className="py-20 sm:py-28">
       <Container>
-        <SectionHeading eyebrow="Two ways to borrow" title="Pick the loan that fits what you have" />
-        <div className="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2">
+        <SectionHeading eyebrow="What We’re Offering" title="All Loans Services" />
+        <article className="bg-card border-border mt-12 grid overflow-hidden rounded-2xl border md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+          <div className="relative aspect-[16/9] md:aspect-auto md:min-h-[20rem]">
+            <Image src={logoAlt} alt="Cashflow Loans emblem with cars and coins" fill placeholder="blur" sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
+          </div>
+          <div className="flex flex-col justify-center p-7 sm:p-10">
+            <h3 className="t-h3 text-[1.75rem]">Personal Loan</h3>
+            <p className="t-lead text-ink/80 mt-4">
+              Cashflow Loans offers fast, micro, secured, and unsecured loans for those ineligible for bank loans using assets as
+              collateral, with transparent terms, rapid approvals, and inclusive financial solutions.
+            </p>
+            <Button asChild size="lg" className="mt-8 self-start">
+              <Link href={primaryCta.href}>{primaryCta.label}</Link>
+            </Button>
+          </div>
+        </article>
+        <h3 className="t-meta text-muted-foreground mt-16">Two ways to borrow</h3>
+        <div className="mt-6 grid gap-x-8 gap-y-14 md:grid-cols-2">
           {routes.map((r) => (
             <article key={r.name} className="flex flex-col">
               <div className="relative aspect-[3/2] overflow-hidden rounded-xl">

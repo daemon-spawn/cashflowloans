@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { calculateRepayment, formatRand, loanRules, minAmountFor, type LoanType } from "@cashflow/core";
+import { calculateRepayment, formatRand, loanRules, maxAmountFor, minAmountFor, type LoanType } from "@cashflow/core";
 import { Button } from "@cashflow/ui/components/button";
 import { cn } from "@cashflow/ui/lib/utils";
 
@@ -10,8 +10,8 @@ import { AnimatedNumber } from "@/components/motion/AnimatedNumber";
 import styles from "./LoanCalculator.module.css";
 
 const TYPES: { value: LoanType; label: string; hint: string }[] = [
-  { value: "unsecured", label: "Unsecured", hint: "Payslip, no collateral" },
-  { value: "secured", label: "Secured", hint: `From ${formatRand(loanRules.securedMinAmount)}, against an asset` },
+  { value: "unsecured", label: "Unsecured", hint: `Up to ${formatRand(loanRules.unsecuredMaxAmount)}, no collateral` },
+  { value: "secured", label: "Secured", hint: `${formatRand(loanRules.securedMinAmount)} to ${formatRand(loanRules.securedMaxAmount)}` },
 ];
 
 type Props = {
@@ -29,9 +29,10 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
   const [amount, setAmount] = useState(defaultAmount);
 
   const min = minAmountFor(type);
-  const value = Math.min(Math.max(amount, min), loanRules.maxAmount);
+  const max = maxAmountFor(type);
+  const value = Math.min(Math.max(amount, min), max);
   const { fee, total } = calculateRepayment(value);
-  const fill = ((value - min) / (loanRules.maxAmount - min)) * 100;
+  const fill = ((value - min) / (max - min)) * 100;
   const bar = layout === "bar";
 
   return (
@@ -72,7 +73,7 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
         id="calc-amount"
         type="range"
         min={min}
-        max={loanRules.maxAmount}
+        max={max}
         step={100}
         value={value}
         onChange={(e) => setAmount(Number(e.target.value))}
@@ -82,7 +83,7 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
       />
       <div className="text-muted-foreground t-num flex justify-between text-xs">
         <span>{formatRand(min)}</span>
-        <span>{formatRand(loanRules.maxAmount)}</span>
+        <span>{formatRand(max)}</span>
       </div>
       </div>
 

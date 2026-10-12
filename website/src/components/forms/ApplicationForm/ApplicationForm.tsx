@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
-import { applicationSchema, calculateRepayment, formatRand, type LoanType } from "@cashflow/core";
+import { applicationSchema, calculateRepayment, formatRand, maxAmountFor, minAmountFor, type LoanType } from "@cashflow/core";
 import { Button } from "@cashflow/ui/components/button";
 import { Input } from "@cashflow/ui/components/input";
 
@@ -87,7 +87,7 @@ export function ApplicationForm({ defaultType = "unsecured", defaultAmount }: Pr
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="amount" label="Amount (R)" error={errors.amount?.message}
-          hint={amount > 0 ? `You repay ${formatRand(calculateRepayment(amount).total)}` : undefined}>
+          hint={`${formatRand(minAmountFor(loanType))} to ${formatRand(maxAmountFor(loanType))}${amount > 0 ? ` · you repay ${formatRand(calculateRepayment(amount).total)}` : ""}`}>
           <Input id="amount" type="number" inputMode="numeric" aria-invalid={!!errors.amount} {...register("amount")} />
         </Field>
         <Field id="repaymentDate" label="Repayment date" error={errors.repaymentDate?.message}>

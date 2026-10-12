@@ -24,7 +24,7 @@ type Route = {
 const routes: Route[] = [
   {
     name: "Unsecured loan",
-    summary: "For people with a regular income. Nothing to hand over.",
+    summary: `Up to ${formatRand(loanRules.unsecuredMaxAmount)} for people with a regular income. Nothing to hand over.`,
     needs: ["Your SA ID", "Latest payslip", "3-month bank statement (PDF)", "A DebiCheck debit order with your bank"],
     href: "/how-it-works/unsecured",
     cta: "How unsecured loans work",
@@ -33,7 +33,7 @@ const routes: Route[] = [
   },
   {
     name: "Secured loan",
-    summary: `From ${formatRand(loanRules.securedMinAmount)}, using your phone, car or property as security.`,
+    summary: `${formatRand(loanRules.securedMinAmount)} to ${formatRand(loanRules.securedMaxAmount)}, using your phone, car or property as security.`,
     needs: ["Your SA ID", "Photos of your item, car title or property papers", "Free courier collection, nationwide", "Insured while we hold it"],
     href: "/how-it-works/secured",
     cta: "How secured loans work",

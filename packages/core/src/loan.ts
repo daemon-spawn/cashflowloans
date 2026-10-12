@@ -6,10 +6,14 @@ export const LOAN_TYPES = ["secured", "unsecured"] as const;
 export type LoanType = (typeof LOAN_TYPES)[number];
 
 export const loanRules = {
+  /** Overall range across both products (used in headlines). */
   minAmount: 100,
   maxAmount: 100_000,
-  /** Secured loans (collateral collected by courier) start at this amount. */
+  /** Unsecured loans (payslip + DebiCheck): R100 to R10,000. */
+  unsecuredMaxAmount: 10_000,
+  /** Secured loans (collateral collected by courier): R500 to R100,000. */
   securedMinAmount: 500,
+  securedMaxAmount: 100_000,
   termMonths: 1,
   /** Flat fee on the principal for the 1-month term. */
   feeRate: 0.5,
@@ -31,4 +35,8 @@ export function balanceAfterMissedPeriods(outstanding: number, missedPeriods: nu
 
 export function minAmountFor(type: LoanType) {
   return type === "secured" ? loanRules.securedMinAmount : loanRules.minAmount;
+}
+
+export function maxAmountFor(type: LoanType) {
+  return type === "secured" ? loanRules.securedMaxAmount : loanRules.unsecuredMaxAmount;
 }

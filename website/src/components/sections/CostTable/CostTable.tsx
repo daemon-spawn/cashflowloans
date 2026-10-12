@@ -68,7 +68,8 @@ export function CostTable() {
             </table>
           </div>
           <p className="text-muted-foreground border-border border-t px-5 py-4 text-sm sm:px-7">
-            Any amount from {formatRand(loanRules.minAmount)} to {formatRand(loanRules.maxAmount)}. Your exact repayment and due date are
+            Unsecured loans from {formatRand(loanRules.minAmount)} to {formatRand(loanRules.unsecuredMaxAmount)}; secured loans from{" "}
+            {formatRand(loanRules.securedMinAmount)} to {formatRand(loanRules.securedMaxAmount)}. Your exact repayment and due date are
             confirmed before you sign.
           </p>
         </figure>

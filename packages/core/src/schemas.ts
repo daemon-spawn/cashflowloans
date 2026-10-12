@@ -3,7 +3,7 @@
  * The Flask API validates the same shapes in backend/app/schemas/.
  */
 import { z } from "zod";
-import { LOAN_TYPES, loanRules } from "./loan";
+import { LOAN_TYPES, loanRules, maxAmountFor } from "./loan";
 import { isValidSaIdNumber } from "./sa-id";
 
 const phone = z
@@ -26,6 +26,10 @@ export const applicationSchema = z
   .refine((v) => v.loanType !== "secured" || v.amount >= loanRules.securedMinAmount, {
     path: ["amount"],
     message: `Secured loans start at R${loanRules.securedMinAmount}`,
+  })
+  .refine((v) => v.amount <= maxAmountFor(v.loanType), {
+    path: ["amount"],
+    message: "Unsecured loans go up to R10,000. Choose a secured loan to borrow more.",
   });
 export type ApplicationInput = z.infer<typeof applicationSchema>;
 

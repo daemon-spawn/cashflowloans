@@ -5,9 +5,13 @@ packages/core/src/loan.ts mirrors these for display on the website and CRM.
 
 from decimal import ROUND_HALF_UP, Decimal
 
+# Overall range across both products.
 MIN_AMOUNT = Decimal("100")
 MAX_AMOUNT = Decimal("100000")
+# Unsecured (payslip + DebiCheck): R100 to R10,000. Secured (collateral): R500 to R100,000.
+UNSECURED_MAX_AMOUNT = Decimal("10000")
 SECURED_MIN_AMOUNT = Decimal("500")
+SECURED_MAX_AMOUNT = Decimal("100000")
 TERM_MONTHS = 1
 FEE_RATE = Decimal("0.5")
 LATE_RATE = Decimal("0.5")

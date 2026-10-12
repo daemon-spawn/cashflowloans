@@ -38,7 +38,7 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
   return (
     <div
       className={cn(
-        "bg-card text-ink rounded-2xl p-6 shadow-[0_24px_60px_-24px_rgb(13_42_33/0.45)] sm:p-7",
+        "bg-card text-ink rounded-[1.75rem] p-6 shadow-[0_30px_80px_-30px_rgb(13_42_33/0.55)] sm:p-7",
         bar && "lg:grid lg:grid-cols-[18rem_minmax(0,1fr)_18rem] lg:items-center lg:gap-x-10 lg:gap-y-5 lg:p-8",
         className,
       )}
@@ -50,12 +50,12 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
             <label
               key={t.value}
               className={cn(
-                "has-focus-visible:outline-[var(--focus)] cursor-pointer rounded-lg border px-3 py-2.5 transition-colors has-focus-visible:outline-3 has-focus-visible:outline-offset-2",
+                "has-focus-visible:outline-[var(--focus)] cursor-pointer rounded-xl border px-3.5 py-3 transition-colors has-focus-visible:outline-3 has-focus-visible:outline-offset-2",
                 type === t.value ? "border-brand-900 bg-sage" : "border-border hover:border-input",
               )}
             >
               <input type="radio" name="calc-type" value={t.value} checked={type === t.value} onChange={() => setType(t.value)} className="sr-only" />
-              <span className="block font-semibold">{t.label}</span>
+              <span className="block font-medium">{t.label}</span>
               <span className="text-muted-foreground block text-xs">{t.hint}</span>
             </label>
           ))}
@@ -65,7 +65,7 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
       <div className={cn(bar && "lg:border-border lg:border-x lg:px-10")}>
       <div className={cn("mt-7 flex items-baseline justify-between gap-4", bar && "lg:mt-0")}>
         <label htmlFor="calc-amount" className="font-medium">I need</label>
-        <output htmlFor="calc-amount" className="font-display t-num text-3xl font-bold tracking-tight">
+        <output htmlFor="calc-amount" className="t-numeral text-[2.75rem]">
           {formatRand(value)}
         </output>
       </div>
@@ -98,9 +98,9 @@ export function LoanCalculator({ className, showCta = true, defaultType = "unsec
           <dt className="text-muted-foreground">Fee ({loanRules.feeRate * 100}%, {loanRules.termMonths} month)</dt>
           <dd className="t-num">{formatRand(fee)}</dd>
         </div>
-        <div className="bg-gold/20 -mx-3 mt-2 flex items-baseline justify-between gap-4 rounded-lg px-3 py-3">
-          <dt className="font-semibold">You repay</dt>
-          <dd className="font-display t-num text-2xl font-bold">
+        <div className="bg-gold/20 -mx-3 mt-2 flex items-baseline justify-between gap-4 rounded-xl px-3 py-3">
+          <dt className="font-medium">You repay</dt>
+          <dd className="t-numeral text-[2.25rem] font-normal">
             <AnimatedNumber value={total} format={formatRand} />
           </dd>
         </div>

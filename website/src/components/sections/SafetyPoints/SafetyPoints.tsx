@@ -19,16 +19,18 @@ const points = [
 /** Objection handling: "is my stuff and my data safe?" */
 export function SafetyPoints() {
   return (
-    <section data-surface="dark" className="bg-brand-950 py-20 text-white sm:py-28">
+    <section className="pb-20 sm:pb-28">
       <Container>
-        <SectionHeading tone="light" eyebrow="Peace of mind" title="Safe with us, from first message to final payment" />
-        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-white/10 md:grid-cols-3">
-          {points.map((p) => (
-            <div key={p.title} className="bg-brand-950 p-7 sm:p-8">
-              <h3 className="t-h3 text-gold">{p.title}</h3>
-              <p className="mt-3 text-white/80">{p.body}</p>
-            </div>
-          ))}
+        <div data-surface="dark" className="bg-brand-950 rounded-[2rem] p-6 text-white sm:p-10 lg:p-14">
+          <SectionHeading tone="light" eyebrow="Peace of mind" title="Safe with us," highlight="from first message to final payment" />
+          <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+            {points.map((p) => (
+              <div key={p.title} className="border-t border-white/15 pt-6">
+                <h3 className="t-h3 text-sage">{p.title}</h3>
+                <p className="mt-3 text-white/70">{p.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </section>

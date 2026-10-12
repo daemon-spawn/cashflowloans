@@ -1,49 +1,62 @@
 /*
- * Type roles (design brief, Gate 5). Use these instead of ad-hoc sizes so the
- * hierarchy stays consistent: display → h2 → h3 → lead/body → meta.
+ * Type roles. One family (DM Sans). Large sizes are light (300) with tight
+ * tracking and the optical-size axis at its display end; reading sizes are
+ * regular. Headlines can carry a two-tone highlight via <Highlight>.
  */
 @utility t-display {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  font-weight: 300;
+  font-variation-settings: "opsz" 40;
+  font-size: clamp(2.625rem, 1.7rem + 3.4vw, 4.75rem);
   line-height: 1.02;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.024em;
   text-wrap: balance;
 }
 
 @utility t-h2 {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-weight: 300;
+  font-variation-settings: "opsz" 40;
+  font-size: clamp(2.125rem, 1.5rem + 2.4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
   text-wrap: balance;
 }
 
 @utility t-h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  font-variation-settings: "opsz" 28;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Oversized numerals for real sequences and headline figures. */
+@utility t-numeral {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-variation-settings: "opsz" 40;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  font-variant-numeric: lining-nums proportional-nums;
 }
 
 @utility t-lead {
-  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
-  line-height: 1.55;
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  line-height: 1.6;
   text-wrap: pretty;
 }
 
 @utility t-meta {
-  font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.8125rem;
   line-height: 1.2;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-/* Single amounts: proportional lining figures (tabular adds gaps in display sizes). */
+/* Single amounts: proportional lining figures. */
 @utility t-num {
   font-variant-numeric: lining-nums proportional-nums;
 }
@@ -57,9 +70,28 @@
   body {
     font-size: 1.0625rem;
     line-height: 1.6;
+    font-variation-settings: "opsz" 14;
   }
   :focus-visible {
     outline: 3px solid var(--focus);
     outline-offset: 2px;
+  }
+}
+
+/* Hero entrance: plays on first paint (no flash before hydration), off for reduced motion. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
   }
 }

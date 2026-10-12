@@ -24,18 +24,23 @@ const steps: Record<LoanType, { title: string; detail: string }[]> = {
   ],
 };
 
+/** The four steps are a real sequence, so they carry the oversized numerals. */
 export function HowItWorks() {
   const [type, setType] = useState<LoanType>("unsecured");
 
   return (
     <section className="bg-sage py-20 sm:py-28">
-      <Container className="grid gap-12 lg:grid-cols-12 lg:gap-x-12">
-        <div className="relative aspect-[3/2] self-start overflow-hidden rounded-xl lg:sticky lg:top-28 lg:col-span-5">
-          <Image src={hands} alt="Hands holding South African bank notes" fill placeholder="blur" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+      <Container className="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <SectionHeading eyebrow="How it works" title="From application to" highlight="money in your account" />
+            <div className="relative mt-10 aspect-[3/2] overflow-hidden rounded-[1.5rem]">
+              <Image src={hands} alt="Hands holding South African bank notes" fill placeholder="blur" sizes="(min-width: 1024px) 38vw, 100vw" className="object-cover" />
+            </div>
+          </div>
         </div>
-        <div className="lg:col-span-7 lg:py-4">
-          <SectionHeading eyebrow="How it works" title="From application to money in your account" />
-          <div role="radiogroup" aria-label="Loan type" className="border-input bg-card mt-8 inline-flex rounded-lg border p-1">
+        <div className="lg:col-span-7">
+          <div role="radiogroup" aria-label="Loan type" className="bg-card inline-flex rounded-full p-1">
             {(["unsecured", "secured"] as const).map((t) => (
               <button
                 key={t}
@@ -44,7 +49,7 @@ export function HowItWorks() {
                 aria-checked={type === t}
                 onClick={() => setType(t)}
                 className={cn(
-                  "min-h-10 rounded-md px-5 text-[0.9375rem] font-semibold capitalize transition-colors",
+                  "min-h-10 rounded-full px-6 text-[0.9375rem] font-medium capitalize transition-colors",
                   type === t ? "bg-brand-900 text-white" : "text-ink/70 hover:text-ink",
                 )}
               >
@@ -52,18 +57,18 @@ export function HowItWorks() {
               </button>
             ))}
           </div>
-          <ol className="border-border mt-8 border-t">
+          <ol className="mt-10">
             {steps[type].map((s, i) => (
-              <li key={s.title} className="border-border grid grid-cols-[3rem_minmax(0,1fr)] gap-4 border-b py-6">
-                <span className="font-display text-brand-700 text-2xl font-bold">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <p className="t-h3">{s.title}</p>
-                  <p className="text-muted-foreground mt-1.5 max-w-[46ch]">{s.detail}</p>
+              <li key={s.title} className="border-brand-900/15 grid grid-cols-[5.5rem_minmax(0,1fr)] items-start gap-6 border-t py-9 sm:grid-cols-[8rem_minmax(0,1fr)]">
+                <span className="t-numeral text-brand-900 text-[clamp(3.5rem,2.8rem+2.4vw,5.5rem)]">{String(i + 1).padStart(2, "0")}</span>
+                <div className="pt-2">
+                  <p className="t-h3 text-[1.5rem]">{s.title}</p>
+                  <p className="text-ink/70 mt-2 max-w-[42ch]">{s.detail}</p>
                 </div>
               </li>
             ))}
           </ol>
-          <p className="text-muted-foreground mt-6 text-[0.9375rem]">You can also apply on WhatsApp or by phone. The steps are the same.</p>
+          <p className="text-ink/60 border-brand-900/15 border-t pt-6 text-[0.9375rem]">You can also apply on WhatsApp or by phone. The steps are the same.</p>
         </div>
       </Container>
     </section>

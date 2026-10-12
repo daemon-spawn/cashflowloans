@@ -8,11 +8,11 @@ import type { BlogPost } from "@/content/blog";
 
 export function BlogPreview({ posts }: { posts: readonly BlogPost[] }) {
   return (
-    <section className="bg-card border-border border-y py-20 sm:py-28">
+    <section className="pb-20 sm:pb-28">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading eyebrow="From the blog" title="Money matters, explained plainly" />
-          <Link href="/blog" className="text-brand-900 group inline-flex items-center gap-2 font-semibold underline-offset-4 hover:underline">
+          <SectionHeading eyebrow="From the blog" title="Money matters," highlight="explained plainly" />
+          <Link href="/blog" className="text-brand-900 group inline-flex items-center gap-2 font-medium underline-offset-4 hover:underline">
             All articles
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
           </Link>

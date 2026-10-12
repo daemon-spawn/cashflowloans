@@ -1,14 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Onest, Schibsted_Grotesk } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { company } from "@cashflow/core";
 
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-// Display: Schibsted Grotesk — sturdy, plain-spoken newspaper grotesque for headings.
-// Body: Onest — open, screen-first sans with clear lining figures for Rand amounts and ID numbers.
-const display = Schibsted_Grotesk({ variable: "--font-schibsted", subsets: ["latin"], display: "swap" });
-const sans = Onest({ variable: "--font-onest", subsets: ["latin"], display: "swap" });
+// DM Sans with its optical-size axis: light and tight for display sizes, regular for body.
+const dm = DM_Sans({ variable: "--font-dm", subsets: ["latin"], axes: ["opsz"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -25,7 +23,7 @@ export const viewport: Viewport = { themeColor: "#0d2a21" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-ZA" className={`${display.variable} ${sans.variable} h-full antialiased`}>
+    <html lang="en-ZA" className={`${dm.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );

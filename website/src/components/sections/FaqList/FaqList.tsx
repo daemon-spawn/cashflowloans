@@ -20,7 +20,7 @@ export function FaqList({ items }: { items: readonly FaqItem[] }) {
     <div className="border-border divide-border divide-y border-y">
       {items.map((item) => (
         <details key={item.question} className="group">
-          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-semibold [&::-webkit-details-marker]:hidden">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-6 text-[1.125rem] font-medium [&::-webkit-details-marker]:hidden">
             {item.question}
             <Plus aria-hidden className="text-brand-900 size-5 shrink-0 transition-transform group-open:rotate-45 motion-reduce:transition-none" />
           </summary>

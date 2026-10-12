@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/shared/PageHeader";
-import { Container } from "@/components/shared/Container";
+import { LegalDocument } from "@/components/shared/LegalDocument";
+import { privacy } from "@/content/legal/privacy";
 
-export const metadata: Metadata = { title: "Privacy Policy" };
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How Cashflow Loans collects, uses and protects your personal information under POPIA.",
+};
 
 export default function PrivacyPage() {
   return (
     <>
-      <PageHeader title="Privacy Policy" />
-      <Container className="max-w-3xl py-20">
-        {/* TODO: owner to supply final legal copy. */}
-      </Container>
+      <PageHeader eyebrow="Legal" title="Privacy" highlight="Policy" description="What we collect, why we need it and how we look after it." />
+      <LegalDocument document={privacy} />
     </>
   );
 }

@@ -24,7 +24,7 @@ export function MobileNav() {
       <Button
         variant="ghost"
         size="icon"
-        className="size-11"
+        className="size-11 text-white hover:bg-white/10 hover:text-white"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         aria-controls="mobile-menu"
@@ -33,8 +33,8 @@ export function MobileNav() {
         {open ? <X className="size-6" /> : <Menu className="size-6" />}
       </Button>
       {open && (
-        <nav id="mobile-menu" aria-label="Main" className="bg-mist absolute inset-x-0 top-full border-b px-4 pt-2 pb-6 shadow-lg">
-          <ul className="divide-border divide-y">
+        <nav id="mobile-menu" aria-label="Main" className="bg-brand-950 absolute inset-x-0 top-full border-b border-white/10 px-4 pt-2 pb-6 text-white shadow-lg">
+          <ul className="divide-y divide-white/10">
             {navigation.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="t-h3 flex min-h-12 items-center" onClick={() => setOpen(false)}>
@@ -47,7 +47,7 @@ export function MobileNav() {
             <Button asChild size="lg">
               <Link href={primaryCta.href} onClick={() => setOpen(false)}>{primaryCta.label}</Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="onDark">
               <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">WhatsApp {company.phoneDisplay}</a>
             </Button>
           </div>

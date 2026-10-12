@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { company, whatsappLink } from "@cashflow/core";
 import { Button } from "@cashflow/ui/components/button";
@@ -5,17 +6,18 @@ import { Button } from "@cashflow/ui/components/button";
 import { Container } from "@/components/shared/Container";
 import { LoanCalculator } from "@/components/sections/LoanCalculator";
 import { primaryCta } from "@/lib/site";
+import customer from "@public/images/customer-smiling-with-r100-notes.jpeg";
 
 /** First viewport: what, who, cost and the next step (design brief, Gate 3). */
 export function HomeHero() {
   return (
-    <section className="bg-brand-950 relative isolate overflow-hidden text-white">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 opacity-[0.07] [background-image:linear-gradient(var(--brand-300)_1px,transparent_1px),linear-gradient(90deg,var(--brand-300)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />
-      <Container className="grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_25rem] lg:gap-16 lg:py-24">
-        <div>
-          <p className="t-meta text-brand-300">Secured & unsecured · South Africa</p>
+    <section className="relative">
+      <div className="bg-brand-950 absolute inset-x-0 top-0 bottom-24 -z-10 lg:bottom-32" aria-hidden />
+      <Container className="grid items-center gap-10 pt-12 text-white sm:pt-16 lg:grid-cols-12 lg:gap-x-12 lg:pt-20">
+        <div className="lg:col-span-6">
+          <p className="t-meta text-brand-300">Secured & unsecured loans · South Africa</p>
           <h1 className="t-display mt-5">Short-term loans from R100 to R100,000, paid out fast.</h1>
-          <p className="t-lead mt-6 max-w-[34rem] text-white/80">
+          <p className="t-lead mt-6 max-w-[33rem] text-white/80">
             Use your phone, car or property as security, or apply unsecured with your payslip. You see exactly what you&apos;ll
             repay before you apply.
           </p>
@@ -31,7 +33,24 @@ export function HomeHero() {
           </div>
           <p className="mt-5 text-sm text-white/60">Takes about 5 minutes. Have your ID ready.</p>
         </div>
-        <LoanCalculator />
+
+        <div className="lg:col-span-6">
+          <div className="relative aspect-[3/2] overflow-hidden rounded-xl">
+            <Image
+              src={customer}
+              alt="A smiling customer holding R100 notes"
+              fill
+              priority
+              placeholder="blur"
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </Container>
+      {/* The calculator straddles the edge of the dark band so cost is visible in the first viewport. */}
+      <Container className="mt-10 pb-12 lg:mt-14 lg:pb-16">
+        <LoanCalculator layout="bar" className="mx-auto max-w-[28rem] lg:max-w-none" />
       </Container>
     </section>
   );

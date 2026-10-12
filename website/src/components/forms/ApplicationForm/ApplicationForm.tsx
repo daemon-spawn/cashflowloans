@@ -9,6 +9,7 @@ import { Button } from "@cashflow/ui/components/button";
 import { Input } from "@cashflow/ui/components/input";
 
 import { Field } from "@/components/forms/Field";
+import { TermsPreview } from "@/components/forms/TermsPreview";
 import { FileInput, MAX_FILE_BYTES } from "@/components/forms/FileInput";
 import { ApiError, submitApplication, type ApplicationFiles } from "@/lib/api";
 
@@ -123,10 +124,11 @@ export function ApplicationForm({ defaultType = "unsecured", defaultAmount }: Pr
         )}
       </fieldset>
 
+      <TermsPreview />
       <label className="flex items-start gap-3 text-sm">
         <input type="checkbox" className="mt-1" {...register("acceptedTerms")} />
         <span>
-          I accept the <a href="/legal/terms" className="underline" target="_blank">terms &amp; conditions</a> and consent to my information being processed in line with the <a href="/legal/privacy" className="underline" target="_blank">privacy policy</a>.
+          I have read and accept the <a href="/legal/terms" className="underline" target="_blank">terms &amp; conditions</a> and consent to my information being processed in line with the <a href="/legal/privacy" className="underline" target="_blank">privacy policy</a>.
         </span>
       </label>
       {errors.acceptedTerms && <p role="alert" className="text-destructive -mt-4 text-sm">{errors.acceptedTerms.message}</p>}

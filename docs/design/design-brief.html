@@ -1,0 +1,400 @@
+<title>Cashflow Loans Design Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column (≈70ch) with wide breakouts for wireframes, specimens and tables. */
+:root {
+  --bg: #f2f5f3;
+  --surface: #ffffff;
+  --ink: #0f1f1a;
+  --muted: #55665f;
+  --line: #d9e1dd;
+  --brand: #1b4d3e;
+  --deep: #0d2a21;
+  --mint: #98c9a3;
+  --marigold: #f2b437;
+  --wire: #e6ece9;
+  --wire-ink: #3d4f48;
+  --flag-bg: #fff4dc;
+  --flag-ink: #6b4a00;
+  --font-display: "Lora", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1512; --surface: #111e1a; --ink: #e8f0ec; --muted: #9db0a8; --line: #22352e;
+    --brand: #98c9a3; --wire: #16231f; --wire-ink: #b6c7bf; --flag-bg: #3a2c08; --flag-ink: #f6d58c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1512; --surface: #111e1a; --ink: #e8f0ec; --muted: #9db0a8; --line: #22352e;
+  --brand: #98c9a3; --wire: #16231f; --wire-ink: #b6c7bf; --flag-bg: #3a2c08; --flag-ink: #f6d58c;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 1rem/1.6 var(--font-body);
+  padding-inline: 16px; padding-block: 0 4rem;
+}
+.page { max-width: 1040px; margin: 0 auto; }
+.read { max-width: 70ch; }
+a { color: var(--brand); }
+:focus-visible { outline: 3px solid var(--marigold); outline-offset: 2px; }
+
+header.cover { padding-block: 4rem 2.5rem; border-bottom: 1px solid var(--line); }
+.eyebrow { font: 600 .78rem/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; line-height: 1.12; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin-top: .75rem; letter-spacing: -.01em; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+h3 { font-size: 1.2rem; }
+.lede { font-size: 1.2rem; color: var(--muted); margin-top: 1rem; }
+.meta-row { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.5rem; font-size: .9rem; color: var(--muted); }
+
+nav.toc { display: flex; flex-wrap: wrap; gap: .5rem; padding-block: 1.5rem; }
+nav.toc a { font-size: .88rem; text-decoration: none; padding: .35rem .7rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); }
+nav.toc a:hover { border-color: var(--brand); }
+
+section.gate { padding-block: 3rem; border-bottom: 1px solid var(--line); display: grid; gap: 1.25rem; }
+.gate-head { display: grid; gap: .5rem; }
+.gate-head p { margin: 0; color: var(--muted); max-width: 70ch; }
+
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+th, td { text-align: left; vertical-align: top; padding: .75rem 1rem; border-bottom: 1px solid var(--line); }
+th { font-weight: 600; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; min-width: 11rem; }
+
+.flag { background: var(--flag-bg); color: var(--flag-ink); border-radius: 10px; padding: 1rem 1.25rem; }
+.flag strong { display: block; margin-bottom: .25rem; }
+ul.clean { margin: 0; padding-left: 1.1rem; display: grid; gap: .4rem; }
+
+/* Wireframes */
+.wire-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (max-width: 760px) { .wire-grid { grid-template-columns: minmax(0, 1fr); } }
+.frame { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; }
+.frame-label { font-size: .8rem; color: var(--muted); padding: 0 4px 4px; }
+.blk { background: var(--wire); color: var(--wire-ink); border-radius: 6px; padding: .7rem .85rem; display: grid; gap: .15rem; }
+.blk b { font-size: .9rem; }
+.blk span { font-size: .8rem; }
+.blk.dark { background: var(--deep); color: #dbe7e1; }
+.blk.hero { min-height: 9rem; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 8px; align-items: stretch; }
+.blk.hero > div { display: grid; gap: .3rem; align-content: start; }
+.blk.hero .calc { background: rgb(255 255 255 / .1); border-radius: 6px; padding: .6rem; font-size: .8rem; }
+.pill-cta { display: inline-block; background: var(--marigold); color: var(--deep); font-weight: 600; font-size: .75rem; border-radius: 6px; padding: .2rem .5rem; justify-self: start; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.phone { max-width: 260px; justify-self: center; width: 100%; }
+.job { font-size: .75rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--brand); }
+.blk.dark .job { color: var(--mint); }
+
+/* Type specimens */
+.specimens { display: grid; gap: 1.25rem; }
+.spec { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; display: grid; gap: 1rem; }
+.spec.recommended { border: 2px solid var(--brand); }
+.spec-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; align-items: baseline; }
+.spec-name { font-weight: 600; }
+.tag { font-size: .75rem; font-weight: 600; background: var(--brand); color: var(--bg); padding: .2rem .55rem; border-radius: 999px; }
+.spec .sample-h { font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.08; text-wrap: balance; color: var(--ink); }
+.spec .sample-b { font-size: 1.05rem; line-height: 1.6; max-width: 60ch; color: var(--ink); margin: 0; }
+.spec .sample-ui { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.btn { font-weight: 600; font-size: .95rem; border-radius: 8px; padding: .7rem 1.1rem; background: var(--marigold); color: #0d2a21; border: 1px solid #0d2a21; }
+.meta-label { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.spec .why { font-size: .9rem; color: var(--muted); margin: 0; }
+.f-lora { font-family: "Lora", Georgia, serif; font-weight: 600; letter-spacing: -.01em; }
+.f-figtree { font-family: "Figtree", system-ui, sans-serif; }
+.f-fraunces { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-variation-settings: "opsz" 96; }
+.f-instrument { font-family: "Instrument Sans", system-ui, sans-serif; }
+.f-figtree-display { font-family: "Figtree", system-ui, sans-serif; font-weight: 700; letter-spacing: -.025em; }
+
+/* Colour */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.sw { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.sw-chip { height: 72px; display: flex; align-items: end; padding: .5rem .65rem; font-size: .8rem; font-weight: 600; }
+.sw-info { padding: .6rem .7rem; font-size: .8rem; display: grid; gap: .1rem; }
+.sw-info code { font-variant-numeric: tabular-nums; color: var(--muted); }
+.ratio { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pass { color: var(--brand); font-weight: 600; }
+.warn { color: var(--flag-ink); font-weight: 600; }
+
+.signoff { display: grid; gap: .6rem; counter-reset: q; }
+.signoff li { list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem .9rem 3rem; position: relative; }
+.signoff li::before { counter-increment: q; content: counter(q); position: absolute; left: 1rem; top: .9rem; font-weight: 700; color: var(--brand); }
+.signoff { padding: 0; margin: 0; }
+footer { padding-top: 2rem; color: var(--muted); font-size: .85rem; }
+</style>
+
+<div class="page">
+  <header class="cover">
+    <p class="eyebrow">Website rebuild · Strategy and visual gates</p>
+    <h1>Cashflow Loans design brief</h1>
+    <p class="lede read">What the new site has to do, how it's organised, and the type and colour system it uses. It follows the Premium Website Engineering Manual's build order: strategy, then sitemap, then wireframes, then the visual system. Page styling starts once this is signed off.</p>
+    <div class="meta-row"><span>Prepared October 2026</span><span>Branch claude/serene-curie-eg5rgp</span><span>Status: awaiting sign-off</span></div>
+  </header>
+
+  <nav class="toc" aria-label="Sections">
+    <a href="#strategy">Strategy</a>
+    <a href="#unknowns">Open questions</a>
+    <a href="#sitemap">Sitemap</a>
+    <a href="#wireframe">Wireframes</a>
+    <a href="#cta">CTA map</a>
+    <a href="#type">Typography</a>
+    <a href="#colour">Colour</a>
+    <a href="#motion">Motion</a>
+    <a href="#signoff">Sign-off</a>
+  </nav>
+
+  <section class="gate" id="strategy">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 1</p>
+      <h2>Strategy</h2>
+      <p>The primary thing we want a visitor to do is <strong>start a loan application with their documents attached</strong>. Everything else supports that or removes a reason not to do it.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>Business result</td><td>Complete applications in the CRM, with ID, payslip, bank statement or collateral photos attached. A WhatsApp conversation is the secondary result.</td></tr>
+          <tr><td>Primary visitor</td><td>South Africans who need R100 to R100,000 quickly, often after a bank has said no. Mostly on a phone, often arriving from Facebook, Instagram or a WhatsApp share.</td></tr>
+          <tr><td>Two routes</td><td><strong>Unsecured:</strong> employed, has a payslip and bank statement. <strong>Secured:</strong> owns a phone, vehicle or property to pledge, from R500.</td></tr>
+          <tr><td>What they already know</td><td>They need money and roughly how much.</td></tr>
+          <tr><td>What they don't know</td><td>Secured versus unsecured, what DebiCheck is, the total they'll repay, what happens to their collateral, and whether they'll qualify.</td></tr>
+          <tr><td>Fears and objections</td><td>Is this a real, registered lender or a scam? What will it really cost? Is my phone or car safe? Is my ID and bank statement safe? How fast is it? What if I pay late?</td></tr>
+          <tr><td>Differentiators</td><td>Accepts collateral the banks won't (phones, vehicle titles, property). Free nationwide courier collection. Money within 15 minutes of DebiCheck. One flat fee shown up front. Real people on WhatsApp.</td></tr>
+          <tr><td>Proof available</td><td>NCR registration (number pending), insured collateral, POPIA compliance. Testimonials pending. No customer counts, reviews or years in business yet.</td></tr>
+          <tr><td>Decision risk</td><td><strong>High.</strong> Money, debt and personal documents are involved. The manual says density should match risk, so the site explains process and cost in full rather than going minimal.</td></tr>
+          <tr><td>Primary CTA</td><td>Start your application → /apply</td></tr>
+          <tr><td>Secondary route</td><td>Chat on WhatsApp</td></tr>
+          <tr><td>First viewport must say</td><td>What: short-term loans from R100 to R100,000. Who: people who need cash fast, including those banks turn down. Why trust: registered, and the cost is shown before you apply. Action: start your application.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="gate" id="unknowns">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 1 · Blockers</p>
+      <h2>Open questions for the owner</h2>
+      <p>The manual says never to invent business facts. These answers go straight into headlines, proof and FAQ copy.</p>
+    </div>
+    <div class="flag read">
+      <strong>Pricing needs a compliance check before it goes on the homepage</strong>
+      The site advertises a flat 50% fee for one month, plus another 50% on the balance for each missed due date. The National Credit Act caps interest and fees on short-term credit, and 50% a month is far above those caps unless the product is structured differently, for example as a pawn transaction. Please have the owner confirm with their NCR compliance advisor exactly how the cost must be described and disclosed. The calculator and hero will show whatever they confirm.
+    </div>
+    <ul class="clean read">
+      <li>NCR registration number (NCRCP…) and the registered business address, both shown in the footer.</li>
+      <li>Testimonials: name or initials, town, loan type, and consent to publish.</li>
+      <li>Do you lend to people who are blacklisted or under debt review? This is a common question, and the answer has to be truthful.</li>
+      <li>Which collateral is accepted (phones, laptops, vehicles, property), and is there a maximum amount per type? Is R100,000 also the unsecured maximum?</li>
+      <li>How quickly does a secured loan pay out after collection?</li>
+      <li>Any real photos: team, office, courier collections, storage? Real imagery beats stock for trust.</li>
+      <li>Proof we can state honestly: years trading, number of loans paid out, Google rating.</li>
+      <li>Blog: migrate the 8 articles as they are, or rewrite them?</li>
+      <li>Analytics: Vercel Analytics, Plausible or GA4?</li>
+    </ul>
+  </section>
+
+  <section class="gate" id="sitemap">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 2</p>
+      <h2>Sitemap and page roles</h2>
+      <p>Every page has one job and a route back to /apply. The header nav stays conventional: How it works, FAQ, About, Contact, plus the primary button.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Page</th><th>Job</th><th>Leads to</th></tr></thead>
+        <tbody>
+          <tr><td>Home /</td><td>Answer "is this for me, is it legit, what will it cost" and start the application.</td><td>/apply, /how-it-works/*</td></tr>
+          <tr><td>How it works</td><td>Help the visitor pick secured or unsecured with a side-by-side comparison.</td><td>Secured, Unsecured</td></tr>
+          <tr><td>Unsecured loans</td><td>Documents needed, DebiCheck explained, 15-minute payout, cost example.</td><td>/apply?type=unsecured</td></tr>
+          <tr><td>Secured loans</td><td>Accepted collateral, free courier, insurance and storage, getting your item back.</td><td>/apply?type=secured</td></tr>
+          <tr><td>Apply</td><td>Calculator plus a short form with document uploads. No distractions: header CTA hidden, WhatsApp kept.</td><td>Success screen with reference</td></tr>
+          <tr><td>FAQ</td><td>Answer every objection directly, written so search engines and AI tools can quote it.</td><td>/apply</td></tr>
+          <tr><td>About</td><td>Who's behind the business: registration, how we lend, our people. Written for the buyer, not the boardroom.</td><td>/apply</td></tr>
+          <tr><td>Contact</td><td>WhatsApp first, then phone and email, then the form (which goes into CRM Messages).</td><td>CRM</td></tr>
+          <tr><td>Blog + 8 articles</td><td>Bring in search traffic and teach before selling.</td><td>/apply, related posts</td></tr>
+          <tr><td>Terms, Privacy</td><td>Legal disclosure, POPIA, cost-of-credit disclosure.</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="gate" id="wireframe">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 3</p>
+      <h2>Homepage wireframe</h2>
+      <p>Each box has a job. The order follows the manual's conversion sequence: clarity, proof, explanation, objections, action. On mobile the H1 and CTA come before the calculator.</p>
+    </div>
+    <div class="wire-grid">
+      <div class="frame" aria-label="Desktop homepage wireframe">
+        <div class="frame-label">Desktop</div>
+        <div class="blk"><span class="job">Navigate</span><b>Header</b><span>Logo · How it works · FAQ · About · Contact · [Start your application]</span></div>
+        <div class="blk dark hero">
+          <div>
+            <span class="job">Clarity + action</span>
+            <b>H1: Short-term loans from R100 to R100,000</b>
+            <span>Sub: Use your phone, car or property as security, or apply unsecured with a payslip. See your cost before you apply.</span>
+            <span class="pill-cta">Start your application</span>
+            <span>WhatsApp us · 061 401 1426</span>
+          </div>
+          <div class="calc"><b>Calculator</b><br>Secured / Unsecured · amount slider<br>You repay R… by …</div>
+        </div>
+        <div class="blk"><span class="job">Early proof</span><b>Trust strip</b><span>NCR registered NCRCP… · Collateral insured · POPIA compliant · Paid out within 15 min of DebiCheck</span></div>
+        <div class="split">
+          <div class="blk"><span class="job">Route</span><b>Unsecured</b><span>Payslip + bank statement · no collateral · DebiCheck → Learn how</span></div>
+          <div class="blk"><span class="job">Route</span><b>Secured</b><span>From R500 · phone, car or property · free courier → Learn how</span></div>
+        </div>
+        <div class="blk"><span class="job">Explain</span><b>How it works: 4 steps</b><span>Apply → upload documents → approval → money in your account. Drawn as one custom process diagram, not icon cards.</span></div>
+        <div class="blk"><span class="job">Objection: cost</span><b>What it costs, plainly</b><span>Worked example table · late payment rule · no hidden fees (wording pending compliance check)</span></div>
+        <div class="blk"><span class="job">Proof</span><b>Testimonials</b><span>Real customers once supplied, placed right before the CTA</span></div>
+        <div class="blk"><span class="job">Objection: safety</span><b>Is my stuff and my data safe?</b><span>Insured, stored securely, DebiCheck protects your account, POPIA</span></div>
+        <div class="blk"><span class="job">Objections</span><b>Top 5 FAQs</b><span>→ All questions</span></div>
+        <div class="blk dark"><span class="job">Convert</span><b>Final CTA</b><span>Start your application · or WhatsApp us</span></div>
+        <div class="blk"><span class="job">Wayfind</span><b>Footer</b><span>Contact routes · hours · NCR number + address · legal · nav</span></div>
+      </div>
+      <div class="frame phone" aria-label="Mobile homepage wireframe">
+        <div class="frame-label">Mobile, first two screens</div>
+        <div class="blk"><b>Logo · ☰</b></div>
+        <div class="blk dark"><span class="job">Clarity</span><b>H1 + sub</b><span class="pill-cta">Start your application</span></div>
+        <div class="blk"><span class="job">Proof</span><b>Trust strip</b><span>Swipeable, 2 visible</span></div>
+        <div class="blk"><span class="job">Cost</span><b>Calculator</b></div>
+        <div class="blk"><span class="job">Route</span><b>Unsecured / Secured</b><span>Stacked</span></div>
+        <div class="blk"><span>… rest as desktop</span></div>
+        <div class="blk dark"><span class="job">Reach</span><b>Sticky bottom bar</b><span>Apply · WhatsApp (thumb zone)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate" id="cta">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 4</p>
+      <h2>CTA map</h2>
+      <p>One primary action, worded the same way and going to the same place everywhere. WhatsApp is the only secondary route.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Placement</th><th>Label</th><th>Proof right before it</th><th>Objection handled</th></tr></thead>
+        <tbody>
+          <tr><td>Header</td><td>Start your application</td><td>—</td><td>Always reachable</td></tr>
+          <tr><td>Hero</td><td>Start your application</td><td>Calculator shows the exact repayment</td><td>"What will it cost?"</td></tr>
+          <tr><td>Loan route cards</td><td>See how unsecured / secured works</td><td>Requirements listed</td><td>"Will I qualify?"</td></tr>
+          <tr><td>After testimonials</td><td>Start your application</td><td>Real customers</td><td>"Is this legit?"</td></tr>
+          <tr><td>Final band</td><td>Start your application · WhatsApp us</td><td>Safety + FAQ</td><td>Anything left</td></tr>
+          <tr><td>Mobile sticky bar</td><td>Apply · WhatsApp</td><td>—</td><td>Reach (Fitts's Law)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="gate" id="type">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 5 · Visual system</p>
+      <h2>Typography: three options</h2>
+      <p>Each option uses two families at most and is set in real Cashflow copy. Satoshi, which the manual pairs with Lora, is only distributed through Fontshare. That site is blocked here, so option A uses Figtree, the closest free Google Font. If you'd rather use Satoshi, download it from fontshare.com and I'll self-host it with the same roles.</p>
+    </div>
+    <div class="specimens">
+      <article class="spec recommended" aria-labelledby="spec-a">
+        <div class="spec-top"><span class="spec-name" id="spec-a">A · Lora headings + Figtree body</span><span class="tag">Recommended</span></div>
+        <p class="meta-label f-figtree">Short-term loans · South Africa</p>
+        <h3 class="sample-h f-lora">Short-term loans from R100 to R100,000, even when the bank says no.</h3>
+        <p class="sample-b f-figtree">Use your phone, car or property as security, or apply unsecured with your payslip. You'll see exactly what you repay before you apply, and money is in your account within 15 minutes of approving DebiCheck.</p>
+        <div class="sample-ui f-figtree"><span class="btn">Start your application</span><span>R1,000 → you repay R1,500 by 31 Oct</span></div>
+        <p class="why f-figtree">A calm serif headline reads as established and accountable, which answers the "is this a scam?" fear. Figtree is open, very legible at small sizes on cheap phones, and has the weights for labels and numbers.</p>
+      </article>
+      <article class="spec" aria-labelledby="spec-b">
+        <div class="spec-top"><span class="spec-name" id="spec-b">B · Fraunces headings + Instrument Sans body</span></div>
+        <p class="meta-label f-instrument">Short-term loans · South Africa</p>
+        <h3 class="sample-h f-fraunces">Short-term loans from R100 to R100,000, even when the bank says no.</h3>
+        <p class="sample-b f-instrument">Use your phone, car or property as security, or apply unsecured with your payslip. You'll see exactly what you repay before you apply, and money is in your account within 15 minutes of approving DebiCheck.</p>
+        <div class="sample-ui f-instrument"><span class="btn">Start your application</span><span>R1,000 → you repay R1,500 by 31 Oct</span></div>
+        <p class="why f-instrument">More character and warmth in the headlines, with a sharper, more technical body. The catch: Fraunces is common on startup sites right now, so it's less distinctive.</p>
+      </article>
+      <article class="spec" aria-labelledby="spec-c">
+        <div class="spec-top"><span class="spec-name" id="spec-c">C · Figtree only, several weights</span></div>
+        <p class="meta-label f-figtree">Short-term loans · South Africa</p>
+        <h3 class="sample-h f-figtree-display">Short-term loans from R100 to R100,000, even when the bank says no.</h3>
+        <p class="sample-b f-figtree">Use your phone, car or property as security, or apply unsecured with your payslip. You'll see exactly what you repay before you apply, and money is in your account within 15 minutes of approving DebiCheck.</p>
+        <div class="sample-ui f-figtree"><span class="btn">Start your application</span><span>R1,000 → you repay R1,500 by 31 Oct</span></div>
+        <p class="why f-figtree">The most coherent and fastest-loading option: one family. It reads like an app or fintech. It needs very disciplined sizing to avoid feeling flat.</p>
+      </article>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Option A setting</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Display</td><td>Lora 600 · 40–64px · line height 1.05 · tracking −1%</td><td>H1, the one statement per page</td></tr>
+          <tr><td>Heading</td><td>Lora 600 · 28–36px · line height 1.15</td><td>Section H2s</td></tr>
+          <tr><td>Body</td><td>Figtree 400 · 17px · line height 1.6 · 65ch max</td><td>Paragraphs, FAQ answers</td></tr>
+          <tr><td>Meta</td><td>Figtree 600 · 12–13px · uppercase · +10% tracking</td><td>Eyebrows, labels, fine print</td></tr>
+          <tr><td>Action</td><td>Figtree 600 · 15–16px</td><td>Buttons, nav, form labels</td></tr>
+          <tr><td>Numbers</td><td>Figtree 600 · tabular figures</td><td>Rand amounts, calculator, tables</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="gate" id="colour">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 5 · Visual system</p>
+      <h2>Colour</h2>
+      <p>The green stays. The split is roughly 60% cool green-tinted neutral, 30% deep green for hero, trust and footer bands, and 10% marigold, which is reserved for the primary action and the repayment figure. Marigold is not used decoratively.</p>
+    </div>
+    <div class="swatches">
+      <div class="sw"><div class="sw-chip" style="background:#f2f5f3;color:#0f1f1a">Mist</div><div class="sw-info"><b>Page background</b><code>#F2F5F3</code></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#0f1f1a;color:#f2f5f3">Ink</div><div class="sw-info"><b>Text</b><code>#0F1F1A</code></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#1b4d3e;color:#ffffff">Money green</div><div class="sw-info"><b>Brand, links</b><code>#1B4D3E</code></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#0d2a21;color:#f2f5f3">Deep green</div><div class="sw-info"><b>Dark bands</b><code>#0D2A21</code></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#f2b437;color:#0d2a21">Marigold</div><div class="sw-info"><b>Primary action only</b><code>#F2B437</code></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#98c9a3;color:#0d2a21">Mint</div><div class="sw-info"><b>Detail on dark</b><code>#98C9A3</code></div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Pairing</th><th>Contrast</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Ink on mist</td><td class="ratio">15.5 : 1</td><td class="pass">AAA body text</td></tr>
+          <tr><td>Muted text on mist</td><td class="ratio">5.5 : 1</td><td class="pass">AA body text</td></tr>
+          <tr><td>White on money green</td><td class="ratio">9.6 : 1</td><td class="pass">AAA</td></tr>
+          <tr><td>Deep green on marigold (button label)</td><td class="ratio">8.3 : 1</td><td class="pass">AAA</td></tr>
+          <tr><td>Mint on deep green</td><td class="ratio">8.2 : 1</td><td class="pass">AAA</td></tr>
+          <tr><td>Marigold button edge on mist</td><td class="ratio">1.7 : 1</td><td class="warn">Too faint alone, so on light backgrounds the button gets a deep-green 1px border</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="gate" id="motion">
+    <div class="gate-head">
+      <p class="eyebrow">Gate 5 · Interaction</p>
+      <h2>Motion rules</h2>
+      <p>Lenis and GSAP stay, used lightly. Everything must work with motion turned off.</p>
+    </div>
+    <ul class="clean read">
+      <li>Lenis smooths scrolling only. No scroll hijacking, no pinned sequences that hold the visitor back.</li>
+      <li>One orchestrated moment: the four-step process diagram draws itself as it enters the screen.</li>
+      <li>Calculator numbers count smoothly to their new value as the slider moves. This is feedback, so it stays.</li>
+      <li>Sections fade up once as they enter the screen, from a visible resting state. Nothing waits at opacity 0.</li>
+      <li>Hover and focus states on every control. Visible focus ring in marigold.</li>
+      <li>prefers-reduced-motion turns all of the above off.</li>
+    </ul>
+  </section>
+
+  <section class="gate" id="signoff">
+    <div class="gate-head">
+      <p class="eyebrow">Next step</p>
+      <h2>What I need you to sign off</h2>
+    </div>
+    <ol class="signoff read">
+      <li>The strategy table is right, or tell me what's wrong with it.</li>
+      <li>The homepage section order and the single "Start your application" CTA.</li>
+      <li>Typography option A, B or C. If A, Figtree or Satoshi?</li>
+      <li>The colour split, with marigold reserved for actions.</li>
+      <li>Whether the owner should edit FAQ, testimonials and blog posts from the CRM (stored in the database, site updates automatically) or whether you'll edit them in code.</li>
+      <li>Forward the open questions above to the owner, especially the pricing compliance check.</li>
+    </ol>
+  </section>
+
+  <footer>Built against the Premium Website Engineering Manual, Edition 06. Wireframes show order and jobs only; the final layout is decided in the build.</footer>
+</div>

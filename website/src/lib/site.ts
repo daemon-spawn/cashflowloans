@@ -1,4 +1,23 @@
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+/**
+ * Canonical site URL. Accepts a bare domain ("cashflowloans.co.za") as well as a
+ * full URL, and falls back to Vercel's production domain, so a missing or
+ * protocol-less env var can't break the build with "Invalid URL".
+ */
+function resolveSiteUrl(): string {
+  const raw =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.VERCEL_URL ||
+    "localhost:3000";
+  const withProtocol = /^https?:\/\//i.test(raw) ? raw : `${raw.startsWith("localhost") ? "http" : "https"}://${raw}`;
+  try {
+    return new URL(withProtocol).origin;
+  } catch {
+    return "http://localhost:3000";
+  }
+}
+
+export const siteUrl = resolveSiteUrl();
 
 /** Primary navigation — conventional labels, kept short so it never wraps. */
 export const navigation = [

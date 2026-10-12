@@ -71,6 +71,17 @@ def test_secured_minimum_amount_enforced(client):
     assert res.status_code == 422
 
 
+def test_unsecured_maximum_amount_enforced(client):
+    res = post(client, payload(amount=10_500), unsecured_files())
+
+    assert res.status_code == 422
+
+
+def test_secured_allows_up_to_100000(client):
+    files = {"idDocument": (io.BytesIO(PDF), "id.pdf"), "collateralImages": (io.BytesIO(JPG), "a.jpg")}
+    assert post(client, payload(loanType="secured", amount=100_000), files).status_code == 201
+
+
 def test_invalid_id_number_rejected(client):
     res = post(client, payload(idNumber="8001015009080"), unsecured_files())
 

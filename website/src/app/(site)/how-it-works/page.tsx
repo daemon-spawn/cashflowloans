@@ -13,11 +13,11 @@ export default function HowItWorksPage() {
       <Container className="grid gap-6 py-20 md:grid-cols-2">
         <Link href="/how-it-works/unsecured" className="hover:border-primary rounded-2xl border p-8">
           <h2 className="text-2xl font-semibold">Unsecured loan</h2>
-          <p className="text-muted-foreground mt-2">No collateral. Approve a DebiCheck and get paid in 15 minutes.</p>
+          <p className="text-muted-foreground mt-2">R100 to R10,000. No collateral. Approve a DebiCheck and get paid in 15 minutes.</p>
         </Link>
         <Link href="/how-it-works/secured" className="hover:border-primary rounded-2xl border p-8">
           <h2 className="text-2xl font-semibold">Secured loan</h2>
-          <p className="text-muted-foreground mt-2">From R500 against your phone, vehicle title or property. Free courier collection.</p>
+          <p className="text-muted-foreground mt-2">R500 to R100,000 against your phone, vehicle title or property. Free courier collection.</p>
         </Link>
       </Container>
     </>

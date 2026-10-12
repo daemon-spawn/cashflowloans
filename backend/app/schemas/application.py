@@ -28,6 +28,8 @@ class ApplicationIn(BaseModel):
     def check_rules(self):
         if self.loan_type == LoanType.SECURED and self.amount < loan_rules.SECURED_MIN_AMOUNT:
             raise ValueError(f"Secured loans start at R{loan_rules.SECURED_MIN_AMOUNT}")
+        if self.loan_type == LoanType.UNSECURED and self.amount > loan_rules.UNSECURED_MAX_AMOUNT:
+            raise ValueError("Unsecured loans go up to R10,000. Choose a secured loan to borrow more.")
         if self.repayment_date < date.today():
             raise ValueError("Repayment date can't be in the past")
         return self

@@ -17,7 +17,7 @@ const steps = [
 export default function SecuredPage() {
   return (
     <>
-      <PageHeader title="Secured loans" description="Borrow from R500 against an asset you own. Your collateral is insured while we hold it." />
+      <PageHeader title="Secured loans" description="Borrow R500 to R100,000 against an asset you own. Your collateral is insured while we hold it." />
       <Container className="py-20"><StepList steps={steps} /></Container>
       <CtaBanner />
     </>

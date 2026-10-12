@@ -4,6 +4,8 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 110
 target-version = "py313"
+# Alembic generates these; keep them as generated.
+extend-exclude = ["migrations"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]

@@ -17,7 +17,7 @@ const steps = [
 export default function UnsecuredPage() {
   return (
     <>
-      <PageHeader title="Unsecured loans" description="No collateral needed." />
+      <PageHeader title="Unsecured loans" description="Borrow R100 to R10,000. No collateral needed." />
       <Container className="py-20"><StepList steps={steps} /></Container>
       <CtaBanner />
     </>

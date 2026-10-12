@@ -1,23 +1,23 @@
 import Link from "next/link";
-import { company } from "@cashflow/core";
-import { Button } from "@cashflow/ui/components/button";
 
 import { Container } from "@/components/shared/Container";
+import { Logo } from "@/components/shared/Logo";
+import { HeaderCta } from "@/components/layout/HeaderCta";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { navigation } from "@/lib/site";
 
 export function Header() {
   return (
-    <header className="bg-background/90 sticky top-0 z-40 border-b backdrop-blur">
+    <header className="bg-mist/90 border-border/70 sticky top-0 z-40 border-b backdrop-blur-md">
       <Container className="relative flex h-16 items-center justify-between gap-6">
-        <Link href="/" className="text-brand-900 text-lg font-bold">
-          {company.name}
+        <Link href="/" aria-label="Cashflow Loans home" className="rounded-sm">
+          <Logo />
         </Link>
-        <nav className="hidden lg:block">
-          <ul className="flex items-center gap-6 text-sm font-medium">
+        <nav aria-label="Main" className="hidden md:block">
+          <ul className="flex items-center gap-8 text-[0.9375rem] font-medium">
             {navigation.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-brand-500 transition-colors">
+                <Link href={item.href} className="text-ink/80 hover:text-ink rounded-sm py-2 transition-colors">
                   {item.label}
                 </Link>
               </li>
@@ -25,9 +25,7 @@ export function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild className="hidden sm:inline-flex">
-            <Link href="/apply">Apply now</Link>
-          </Button>
+          <HeaderCta />
           <MobileNav />
         </div>
       </Container>

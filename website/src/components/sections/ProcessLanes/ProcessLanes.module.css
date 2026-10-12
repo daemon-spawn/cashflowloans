@@ -1,0 +1,75 @@
+.lane {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* Mobile: vertical timeline. Desktop: four columns on one horizontal line. */
+.steps {
+  position: relative;
+  display: grid;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.line {
+  position: absolute;
+  top: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  width: 2px;
+  transform-origin: top;
+  background: var(--brand-900);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  align-content: start; /* steps with two-line details must not push their neighbours down */
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: var(--card);
+  border: 2px solid var(--brand-900);
+  color: var(--brand-900);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.step:last-child .node {
+  background: var(--marigold);
+  border-color: var(--brand-950);
+  color: var(--brand-950);
+}
+
+@media (min-width: 48rem) {
+  .steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .line {
+    top: 1.25rem;
+    bottom: auto;
+    left: 1.25rem;
+    right: calc(25% - 1.25rem);
+    width: auto;
+    height: 2px;
+    transform-origin: left;
+  }
+
+  .step {
+    grid-template-columns: 1fr;
+  }
+}

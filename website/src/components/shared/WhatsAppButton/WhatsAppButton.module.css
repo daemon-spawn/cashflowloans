@@ -1,17 +1,24 @@
+/* Desktop only: phones get the MobileActionBar instead. */
 .button {
   position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
+  right: 1.5rem;
+  bottom: 1.5rem;
   z-index: 50;
-  display: grid;
+  display: none;
   place-items: center;
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 9999px;
   background: #25d366;
   color: #fff;
-  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.25);
+  box-shadow: 0 10px 25px -5px rgb(13 42 33 / 0.35);
   transition: transform 0.2s ease;
+}
+
+@media (min-width: 48rem) {
+  .button {
+    display: grid;
+  }
 }
 
 .button:hover {
@@ -21,4 +28,10 @@
 .button svg {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
 }

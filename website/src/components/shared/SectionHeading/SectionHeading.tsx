@@ -5,15 +5,18 @@ type SectionHeadingProps = {
   title: string;
   description?: string;
   align?: "left" | "center";
+  tone?: "dark" | "light";
   className?: string;
 };
 
-export function SectionHeading({ eyebrow, title, description, align = "left", className }: SectionHeadingProps) {
+export function SectionHeading({ eyebrow, title, description, align = "left", tone = "dark", className }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
-      {eyebrow && <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest">{eyebrow}</p>}
-      <h2 className="mt-2 text-3xl font-semibold sm:text-4xl">{title}</h2>
-      {description && <p className="text-muted-foreground mt-4 text-lg">{description}</p>}
+    <div className={cn("max-w-[40rem]", align === "center" && "mx-auto text-center", className)}>
+      {eyebrow && <p className={cn("t-meta", tone === "dark" ? "text-brand-700" : "text-brand-300")}>{eyebrow}</p>}
+      <h2 className="t-h2 mt-3">{title}</h2>
+      {description && (
+        <p className={cn("t-lead mt-4", tone === "dark" ? "text-muted-foreground" : "text-white/75")}>{description}</p>
+      )}
     </div>
   );
 }

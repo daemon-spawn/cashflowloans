@@ -8,14 +8,20 @@ import { ApplicationForm } from "@/components/forms/ApplicationForm";
 
 export const metadata: Metadata = { title: "Apply for a loan" };
 
-async function PrefilledForm({ searchParams }: { searchParams: PageProps<"/apply">["searchParams"] }) {
+async function readPrefill(searchParams: PageProps<"/apply">["searchParams"]) {
   const { type, amount } = await searchParams;
-  return (
-    <ApplicationForm
-      defaultType={type === "secured" ? "secured" : "unsecured"}
-      defaultAmount={typeof amount === "string" ? Number(amount) || undefined : undefined}
-    />
-  );
+  return {
+    defaultType: type === "secured" ? ("secured" as const) : ("unsecured" as const),
+    defaultAmount: typeof amount === "string" ? Number(amount) || undefined : undefined,
+  };
+}
+
+async function PrefilledForm({ searchParams }: { searchParams: PageProps<"/apply">["searchParams"] }) {
+  return <ApplicationForm {...await readPrefill(searchParams)} />;
+}
+
+async function PrefilledCalculator({ searchParams }: { searchParams: PageProps<"/apply">["searchParams"] }) {
+  return <LoanCalculator showCta={false} {...await readPrefill(searchParams)} />;
 }
 
 export default function ApplyPage({ searchParams }: PageProps<"/apply">) {
@@ -27,7 +33,9 @@ export default function ApplyPage({ searchParams }: PageProps<"/apply">) {
           <PrefilledForm searchParams={searchParams} />
         </Suspense>
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <LoanCalculator />
+          <Suspense fallback={<LoanCalculator showCta={false} />}>
+            <PrefilledCalculator searchParams={searchParams} />
+          </Suspense>
         </aside>
       </Container>
     </>

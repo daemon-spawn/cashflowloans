@@ -21,7 +21,7 @@ export function CompanyIntro() {
             we&apos;re committed to helping you achieve financial stability. Cashflow Loans — your reliable partner in navigating
             life&apos;s financial challenges.
           </p>
-          <div className="bg-brand-950 mt-10 inline-flex items-center gap-5 rounded-xl py-4 pr-7 pl-4 text-white">
+          <div data-surface="dark" className="bg-brand-950 mt-10 inline-flex items-center gap-5 rounded-xl py-4 pr-7 pl-4 text-white">
             <Image src={mark} alt="" className="h-14 w-auto" />
             <div>
               <p className="font-display text-lg font-semibold">Certified Company</p>

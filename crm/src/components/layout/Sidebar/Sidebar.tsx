@@ -11,7 +11,7 @@ export function Sidebar() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <aside className="bg-brand-950 hidden w-60 shrink-0 flex-col text-white/80 md:flex">
+    <aside data-surface="dark" className="bg-brand-950 hidden w-60 shrink-0 flex-col text-white/80 md:flex">
       <div className="px-6 py-5 text-lg font-bold text-white">Cashflow CRM</div>
       <nav className="flex-1 px-3">
         <ul className="space-y-1">

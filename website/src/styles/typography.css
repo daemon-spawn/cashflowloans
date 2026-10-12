@@ -59,7 +59,7 @@
     line-height: 1.6;
   }
   :focus-visible {
-    outline: 3px solid var(--marigold);
+    outline: 3px solid var(--focus);
     outline-offset: 2px;
   }
 }

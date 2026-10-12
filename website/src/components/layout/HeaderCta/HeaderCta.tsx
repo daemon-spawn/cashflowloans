@@ -12,7 +12,7 @@ export function HeaderCta() {
   if (pathname.startsWith(primaryCta.href)) return null;
 
   return (
-    <Button asChild className="hidden sm:inline-flex">
+    <Button asChild variant="inverse" className="hidden sm:inline-flex">
       <Link href={primaryCta.href}>{primaryCta.label}</Link>
     </Button>
   );

@@ -12,12 +12,12 @@ export function FinalCta() {
   return (
     <section className="pb-20 sm:pb-28">
       <Container>
-        <div className="bg-brand-950 grid overflow-hidden rounded-2xl text-white md:grid-cols-2">
+        <div data-surface="dark" className="bg-brand-950 grid overflow-hidden rounded-2xl text-white md:grid-cols-2">
           <div className="flex flex-col justify-center px-7 py-12 sm:px-12 lg:py-16">
             <h2 className="t-h2 max-w-[18ch]">See what you&apos;ll repay, then apply in about 5 minutes</h2>
             <p className="mt-4 max-w-[40ch] text-white/75">Prefer to talk first? Our team answers on WhatsApp, Monday to Saturday.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
+              <Button asChild size="lg" variant="inverse">
                 <Link href={primaryCta.href}>{primaryCta.label}</Link>
               </Button>
               <Button asChild size="lg" variant="onDark">

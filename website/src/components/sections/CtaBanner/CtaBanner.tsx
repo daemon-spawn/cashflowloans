@@ -14,13 +14,13 @@ export function CtaBanner({
   return (
     <section className="pb-20 sm:pb-28">
       <Container>
-        <div className="bg-brand-900 grid gap-8 rounded-3xl px-7 py-12 text-white sm:px-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:py-14">
+        <div data-surface="dark" className="bg-brand-900 grid gap-8 rounded-3xl px-7 py-12 text-white sm:px-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:py-14">
           <div>
             <h2 className="t-h2 max-w-[22ch]">{title}</h2>
             <p className="mt-4 max-w-[46ch] text-white/75">{description}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="inverse">
               <Link href={primaryCta.href}>{primaryCta.label}</Link>
             </Button>
             <Button asChild size="lg" variant="onDark">

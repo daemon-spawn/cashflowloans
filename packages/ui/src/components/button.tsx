@@ -5,12 +5,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@cashflow/ui/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-[background-color,border-color,color,box-shadow,transform] active:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-[background-color,border-color,color,box-shadow,transform] active:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        // Primary action: marigold. The deep border keeps it visible on light backgrounds (1.7:1 fill alone).
-        default: "bg-primary text-primary-foreground border border-brand-950 hover:bg-marigold-hover",
+        // Primary action on light surfaces: money green, white label (9.6:1).
+        default: "bg-primary text-primary-foreground hover:bg-brand-700",
+        // Primary action on deep-green surfaces, where money green would disappear (1.6:1): ivory, deep-green label.
+        inverse: "bg-ivory text-brand-950 hover:bg-white",
         destructive: "bg-destructive text-white shadow-xs hover:bg-destructive/90",
         outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",

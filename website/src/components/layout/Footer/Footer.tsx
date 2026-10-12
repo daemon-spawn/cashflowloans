@@ -14,7 +14,7 @@ async function CopyrightYear() {
 function FooterColumn({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
   return (
     <nav aria-label={title}>
-      <p className="t-meta text-brand-300">{title}</p>
+      <p className="t-meta text-gold">{title}</p>
       <ul className="mt-4 space-y-2.5">
         {links.map((item) => (
           <li key={item.href}>
@@ -28,19 +28,19 @@ function FooterColumn({ title, links }: { title: string; links: readonly { label
 
 export async function Footer() {
   return (
-    <footer className="bg-brand-950 mt-auto pb-24 text-white/75 md:pb-0">
+    <footer data-surface="dark" className="bg-brand-950 mt-auto pb-24 text-white/75 md:pb-0">
       <Container className="grid gap-12 py-16 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div className="grid content-start gap-5">
           <Logo variant="full" height={118} className="w-[12.5rem]" />
           <p className="max-w-xs">Secured and unsecured short-term loans for South Africans, from R100 to R100,000.</p>
-          <Button asChild className="justify-self-start">
+          <Button asChild variant="inverse" className="justify-self-start">
             <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </Button>
         </div>
         <FooterColumn title="Loans" links={footerNavigation.loans} />
         <FooterColumn title="Company" links={footerNavigation.company} />
         <div>
-          <p className="t-meta text-brand-300">Talk to us</p>
+          <p className="t-meta text-gold">Talk to us</p>
           <ul className="mt-4 space-y-2.5">
             <li><a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp {company.phoneDisplay}</a></li>
             <li><a href={`tel:${company.phone}`} className="hover:text-white">Call {company.phoneDisplay}</a></li>

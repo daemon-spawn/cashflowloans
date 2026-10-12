@@ -28,7 +28,7 @@ export function HowItWorks() {
   const [type, setType] = useState<LoanType>("unsecured");
 
   return (
-    <section className="bg-brand-50 py-20 sm:py-28">
+    <section className="bg-sage py-20 sm:py-28">
       <Container className="grid gap-12 lg:grid-cols-12 lg:gap-x-12">
         <div className="relative aspect-[3/2] self-start overflow-hidden rounded-xl lg:sticky lg:top-28 lg:col-span-5">
           <Image src={hands} alt="Hands holding South African bank notes" fill placeholder="blur" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />

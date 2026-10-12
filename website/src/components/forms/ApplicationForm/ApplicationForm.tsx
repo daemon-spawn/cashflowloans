@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
@@ -12,6 +13,7 @@ import { Field } from "@/components/forms/Field";
 import { TermsPreview } from "@/components/forms/TermsPreview";
 import { FileInput, MAX_FILE_BYTES } from "@/components/forms/FileInput";
 import { ApiError, submitApplication, type ApplicationFiles } from "@/lib/api";
+import { parsePrefill } from "@/lib/prefill";
 
 type FormIn = z.input<typeof applicationSchema>;
 type FormOut = z.output<typeof applicationSchema>;
@@ -29,10 +31,24 @@ export function ApplicationForm({ defaultType = "unsecured", defaultAmount }: Pr
   const [result, setResult] = useState<{ reference: string }>();
   const [serverError, setServerError] = useState<string>();
 
-  const { register, handleSubmit, control, setValue, formState } = useForm<FormIn, unknown, FormOut>({
+  // The URL is the source of truth for the calculator's choice; props are the server-rendered fallback.
+  const params = useSearchParams();
+  const urlType = params.get("type");
+  const urlAmount = params.get("amount");
+  const initial = parsePrefill(urlType ?? defaultType, urlAmount);
+
+  const { register, handleSubmit, control, setValue, getValues, formState } = useForm<FormIn, unknown, FormOut>({
     resolver: zodResolver(applicationSchema),
-    defaultValues: { loanType: defaultType, amount: defaultAmount ?? "" },
+    defaultValues: { loanType: initial.type, amount: initial.amount ?? defaultAmount ?? "" },
   });
+
+  // Keep the fields in step when the query string changes without a remount
+  // (client navigation, a restored page), unless the applicant already typed the same thing.
+  useEffect(() => {
+    const prefill = parsePrefill(urlType, urlAmount);
+    if (urlType && getValues("loanType") !== prefill.type) setValue("loanType", prefill.type);
+    if (prefill.amount !== undefined && Number(getValues("amount")) !== prefill.amount) setValue("amount", prefill.amount);
+  }, [urlType, urlAmount, getValues, setValue]);
   const { errors, isSubmitting } = formState;
   const loanType = useWatch({ control, name: "loanType" }) as LoanType;
   const amount = Number(useWatch({ control, name: "amount" })) || 0;

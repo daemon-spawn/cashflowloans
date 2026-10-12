@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
 import { Container } from "@/components/shared/Container";
 import { LoanCalculator } from "@/components/sections/LoanCalculator";
 import { ApplicationForm } from "@/components/forms/ApplicationForm";
+import { parsePrefill } from "@/lib/prefill";
 
 export const metadata: Metadata = {
   title: "Apply for a loan",
@@ -14,10 +15,8 @@ export const metadata: Metadata = {
 
 async function readPrefill(searchParams: PageProps<"/apply">["searchParams"]) {
   const { type, amount } = await searchParams;
-  return {
-    defaultType: type === "secured" ? ("secured" as const) : ("unsecured" as const),
-    defaultAmount: typeof amount === "string" ? Number(amount) || undefined : undefined,
-  };
+  const prefill = parsePrefill(typeof type === "string" ? type : undefined, typeof amount === "string" ? amount : undefined);
+  return { defaultType: prefill.type, defaultAmount: prefill.amount };
 }
 
 async function PrefilledForm({ searchParams }: { searchParams: PageProps<"/apply">["searchParams"] }) {

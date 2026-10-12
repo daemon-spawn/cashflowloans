@@ -1,0 +1,6 @@
+/* Website-specific custom CSS. Brand tokens live in packages/ui. */
+@layer base {
+  h1, h2, h3, h4 {
+    @apply tracking-tight text-balance;
+  }
+}

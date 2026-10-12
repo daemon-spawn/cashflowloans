@@ -1,0 +1,10 @@
+packages:
+  - website
+  - crm
+  - packages/*
+
+ignoredBuiltDependencies:
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - sharp

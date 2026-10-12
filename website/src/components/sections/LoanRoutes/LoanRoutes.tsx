@@ -5,8 +5,8 @@ import { formatRand, loanRules } from "@cashflow/core";
 
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import approved from "@public/images/personal-loan-approved.jpg";
 import phone from "@public/images/applying-on-phone.jpeg";
-import carKeys from "@public/images/car-keys-handover.jpeg";
 
 type Route = {
   name: string;
@@ -25,8 +25,8 @@ const routes: Route[] = [
     needs: ["Your SA ID", "Latest payslip", "3-month bank statement (PDF)", "A DebiCheck debit order with your bank"],
     href: "/how-it-works/unsecured",
     cta: "How unsecured loans work",
-    image: phone,
-    alt: "Applying for a loan on a phone",
+    image: approved,
+    alt: "A personal loan form stamped approved",
   },
   {
     name: "Secured loan",
@@ -34,8 +34,8 @@ const routes: Route[] = [
     needs: ["Your SA ID", "Photos of your item, car title or property papers", "Free courier collection, nationwide", "Insured while we hold it"],
     href: "/how-it-works/secured",
     cta: "How secured loans work",
-    image: carKeys,
-    alt: "Car keys being handed to a smiling driver",
+    image: phone,
+    alt: "A smartphone, one of the items you can use as security",
   },
 ];
 

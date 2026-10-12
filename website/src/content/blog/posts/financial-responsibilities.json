@@ -1,0 +1,75 @@
+{
+  "slug": "financial-responsibilities",
+  "title": "The Basics of Financial Responsibilities",
+  "excerpt": "Understanding financial responsibility is crucial for maintaining a healthy financial life. Here are the key aspects you need to know.",
+  "publishedAt": "2025-08-07",
+  "image": "/images/customer-thumbs-up-blue.jpeg",
+  "imageAlt": "A young man holding R100 notes and giving a thumbs up",
+  "tags": [],
+  "body": [
+    {
+      "type": "paragraph",
+      "text": "Understanding financial responsibility is crucial for maintaining a healthy financial life. Here are the key aspects you need to know:"
+    },
+    {
+      "type": "heading",
+      "text": "Budgeting"
+    },
+    {
+      "type": "paragraph",
+      "text": "Creating and maintaining a budget is the foundation of financial responsibility. Track your income and expenses to understand your spending patterns and make informed financial decisions."
+    },
+    {
+      "type": "heading",
+      "text": "Emergency Fund"
+    },
+    {
+      "type": "paragraph",
+      "text": "Build an emergency fund that covers 3-6 months of living expenses. This provides financial security during unexpected situations like medical emergencies or job loss."
+    },
+    {
+      "type": "heading",
+      "text": "Responsible Borrowing"
+    },
+    {
+      "type": "paragraph",
+      "text": "When taking loans, ensure you:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Understand the terms and conditions",
+        "Can afford the repayments",
+        "Have a clear repayment plan",
+        "Borrow only what you need"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Saving and Investing"
+    },
+    {
+      "type": "paragraph",
+      "text": "Regular saving and smart investing help build long-term wealth. Start with small amounts and gradually increase your savings as your income grows."
+    },
+    {
+      "type": "heading",
+      "text": "Debt Management"
+    },
+    {
+      "type": "paragraph",
+      "text": "Manage your debt responsibly by:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Paying bills on time",
+        "Keeping credit utilization low",
+        "Avoiding unnecessary debt",
+        "Prioritizing high-interest debt repayment"
+      ]
+    }
+  ]
+}

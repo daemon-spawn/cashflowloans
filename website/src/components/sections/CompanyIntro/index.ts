@@ -1,0 +1,1 @@
+export { CompanyIntro } from "./CompanyIntro";

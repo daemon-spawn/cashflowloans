@@ -1,20 +1,35 @@
 import Image from "next/image";
 
 import { cn } from "@cashflow/ui/lib/utils";
+import horizontal from "@public/images/logo-horizontal.png";
+import full from "@public/images/logo-full.png";
 
 /**
- * The business's own logo (public/images/logo.jpeg), shown whole as a badge
- * like the original site did. Don't redraw or crop it.
+ * The business's own logo artwork, taken from public/images/logo.jpeg with its
+ * dark square removed. "horizontal" places the icon beside the wordmark so the
+ * name is legible at header size; "full" is the original stacked lockup with
+ * tagline. Both are white-on-transparent, so use them on dark backgrounds.
  */
-export function Logo({ size = 52, priority = false, className }: { size?: number; priority?: boolean; className?: string }) {
+export function Logo({
+  variant = "horizontal",
+  height = 44,
+  priority = false,
+  className,
+}: {
+  variant?: "horizontal" | "full";
+  height?: number;
+  priority?: boolean;
+  className?: string;
+}) {
+  const src = variant === "full" ? full : horizontal;
   return (
     <Image
-      src="/images/logo.jpeg"
+      src={src}
       alt="Cashflow Loans"
-      width={size}
-      height={size}
+      height={height}
+      width={Math.round((src.width / src.height) * height)}
       priority={priority}
-      className={cn("rounded-[18%] ring-1 ring-white/15", className)}
+      className={cn("h-auto max-w-full", className)}
     />
   );
 }

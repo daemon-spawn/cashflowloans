@@ -4,6 +4,7 @@
  */
 import { faq, type FaqItem } from "@/content/faq";
 import { testimonials, type Testimonial } from "@/content/testimonials";
+import { getPost as findPost, posts, type BlogPost } from "@/content/blog";
 
 export async function getFaqs(): Promise<readonly FaqItem[]> {
   return faq;
@@ -11,4 +12,12 @@ export async function getFaqs(): Promise<readonly FaqItem[]> {
 
 export async function getTestimonials(): Promise<readonly Testimonial[]> {
   return testimonials;
+}
+
+export async function getPosts(limit?: number): Promise<readonly BlogPost[]> {
+  return limit ? posts.slice(0, limit) : posts;
+}
+
+export async function getPost(slug: string): Promise<BlogPost | undefined> {
+  return findPost(slug);
 }

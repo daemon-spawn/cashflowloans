@@ -1,23 +1,43 @@
 /**
- * Blog registry. Articles are migrated from legacy/src/blog/*.html during the
- * redesign; each post lives in its own module next to this file.
+ * Blog posts migrated from legacy/src/blog/*.html (text kept as published,
+ * images as used on the original homepage). These files seed the CRM-managed
+ * content later; until then they are the source of truth.
  */
+import financialResponsibilities from "./posts/financial-responsibilities.json";
+import debtConsolidation from "./posts/debt-consolidation.json";
+import howToChoosePersonalLoan from "./posts/how-to-choose-personal-loan.json";
+import personalVsPaydayLoans from "./posts/personal-vs-payday-loans.json";
+import unsecuredVsSecuredLoans from "./posts/unsecured-vs-secured-loans.json";
+import personalVsCreditCards from "./posts/personal-vs-credit-cards.json";
+import avoidDebtSpiral from "./posts/avoid-debt-spiral.json";
+import needsVsWants from "./posts/needs-vs-wants.json";
+
+export type BlogBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  | { type: "list"; ordered: boolean; items: string[] };
+
 export type BlogPost = {
   slug: string;
   title: string;
   excerpt: string;
   publishedAt: string;
+  image: string;
+  imageAlt: string;
+  tags: string[];
+  body: BlogBlock[];
 };
 
-export const posts: readonly BlogPost[] = [
-  { slug: "financial-responsibilities", title: "The basics of financial responsibility", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "debt-consolidation", title: "When to take out a debt consolidation loan", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "how-to-choose-personal-loan", title: "How to choose a personal loan", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "personal-vs-payday-loans", title: "Personal loans vs payday loans", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "unsecured-vs-secured-loans", title: "Unsecured vs secured loans", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "personal-vs-credit-cards", title: "Personal loans vs credit cards", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "avoid-debt-spiral", title: "How to avoid the debt spiral", excerpt: "", publishedAt: "2025-08-07" },
-  { slug: "needs-vs-wants", title: "Needs vs wants", excerpt: "", publishedAt: "2025-08-07" },
-];
+/** Order matches the original homepage, followed by the two footer articles. */
+export const posts = [
+  financialResponsibilities,
+  debtConsolidation,
+  howToChoosePersonalLoan,
+  personalVsPaydayLoans,
+  unsecuredVsSecuredLoans,
+  personalVsCreditCards,
+  avoidDebtSpiral,
+  needsVsWants,
+] as BlogPost[];
 
 export const getPost = (slug: string) => posts.find((p) => p.slug === slug);

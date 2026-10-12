@@ -1,0 +1,68 @@
+{
+  "slug": "avoid-debt-spiral",
+  "title": "How to Avoid the Debt Spiral",
+  "excerpt": "A debt spiral occurs when you're borrowing money to pay off existing debt, leading to an ever-increasing cycle of debt. Here's how to avoid it.",
+  "publishedAt": "2025-08-07",
+  "image": "/images/hand-with-rand-notes.jpeg",
+  "imageAlt": "A hand holding a fan of Rand notes",
+  "tags": [],
+  "body": [
+    {
+      "type": "paragraph",
+      "text": "A debt spiral occurs when you're borrowing money to pay off existing debt, leading to an ever-increasing cycle of debt. Here's how to avoid it:"
+    },
+    {
+      "type": "heading",
+      "text": "Create a Budget"
+    },
+    {
+      "type": "paragraph",
+      "text": "Track your income and expenses to understand your financial situation. Identify areas where you can cut back on spending."
+    },
+    {
+      "type": "heading",
+      "text": "Build an Emergency Fund"
+    },
+    {
+      "type": "paragraph",
+      "text": "Having savings for unexpected expenses prevents the need to rely on credit when emergencies arise."
+    },
+    {
+      "type": "heading",
+      "text": "Prioritize Debt Repayment"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "List all your debts with their interest rates",
+        "Consider the snowball or avalanche method for debt repayment",
+        "Make more than minimum payments when possible"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Avoid New Debt"
+    },
+    {
+      "type": "paragraph",
+      "text": "While paying off existing debt, avoid taking on new credit obligations unless absolutely necessary."
+    },
+    {
+      "type": "heading",
+      "text": "Seek Professional Help"
+    },
+    {
+      "type": "paragraph",
+      "text": "If you're struggling with debt, consider consulting a financial advisor or debt counselor for guidance."
+    },
+    {
+      "type": "heading",
+      "text": "Increase Your Income"
+    },
+    {
+      "type": "paragraph",
+      "text": "Look for ways to earn additional income through part-time work or selling unused items."
+    }
+  ]
+}

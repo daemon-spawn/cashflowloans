@@ -31,7 +31,7 @@ export async function Footer() {
     <footer className="bg-brand-950 mt-auto pb-24 text-white/75 md:pb-0">
       <Container className="grid gap-12 py-16 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div className="grid content-start gap-5">
-          <Logo size={112} />
+          <Logo variant="full" height={118} className="w-[12.5rem]" />
           <p className="max-w-xs">Secured and unsecured short-term loans for South Africans, from R100 to R100,000.</p>
           <Button asChild className="justify-self-start">
             <Link href={primaryCta.href}>{primaryCta.label}</Link>

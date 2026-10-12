@@ -1,0 +1,89 @@
+{
+  "slug": "needs-vs-wants",
+  "title": "Understanding Needs vs Wants: A Guide to Better Financial Decisions",
+  "excerpt": "Understanding the difference between needs and wants is crucial for making sound financial decisions and maintaining a healthy budget.",
+  "publishedAt": "2025-08-07",
+  "image": "/images/rand-notes-handed-over.jpeg",
+  "imageAlt": "Rand notes being handed over",
+  "tags": [],
+  "body": [
+    {
+      "type": "paragraph",
+      "text": "Understanding the difference between needs and wants is crucial for making sound financial decisions and maintaining a healthy budget."
+    },
+    {
+      "type": "heading",
+      "text": "What Are Needs?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Needs are essential items and services required for basic survival and functioning in society:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Housing and utilities",
+        "Basic food and water",
+        "Healthcare",
+        "Basic transportation",
+        "Essential clothing"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What Are Wants?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Wants are items and services that enhance life but aren't essential for survival:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Entertainment subscriptions",
+        "Luxury clothing and accessories",
+        "Dining out",
+        "Latest gadgets",
+        "Vacations"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "How to Prioritize"
+    },
+    {
+      "type": "paragraph",
+      "text": "Follow these steps to make better financial decisions:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "List all your regular expenses",
+        "Categorize them as needs or wants",
+        "Ensure needs are covered first",
+        "Budget for wants from remaining funds",
+        "Save before spending on wants"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "The 50/30/20 Rule"
+    },
+    {
+      "type": "paragraph",
+      "text": "A popular budgeting method:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "50% for needs",
+        "30% for wants",
+        "20% for savings and debt repayment"
+      ]
+    }
+  ]
+}

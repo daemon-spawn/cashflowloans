@@ -12,7 +12,7 @@ export function Header() {
     <header className="bg-brand-950 sticky top-0 z-40 border-b border-white/10 text-white">
       <Container className="relative flex h-20 items-center justify-between gap-6">
         <Link href="/" aria-label="Cashflow Loans home" className="rounded-md">
-          <Logo size={64} priority />
+          <Logo height={44} priority className="w-[13.5rem] sm:w-[15.5rem]" />
         </Link>
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-9 text-[0.9375rem] font-medium">

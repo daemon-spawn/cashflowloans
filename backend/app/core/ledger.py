@@ -83,7 +83,7 @@ def build_ledger(
             ledger.missed_periods += 1
             ledger.late_charges = m(ledger.late_charges + charge)
             ledger.entries.append(
-                Entry(on, "late_charge", charge, balance, f"Missed due date {on.isoformat()}: +50%")
+                Entry(on, "late_charge", charge, balance, f"Missed due date {on.day} {on:%b %Y}: +50%")
             )
 
     ledger.balance = balance

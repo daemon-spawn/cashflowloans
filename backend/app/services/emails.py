@@ -17,6 +17,10 @@ def long_date(d: date) -> str:
     return f"{d.day} {d:%B %Y}"
 
 
+def short_date(d: date) -> str:
+    return f"{d.day} {d:%b %Y}"
+
+
 def _footer() -> str:
     return (
         "\n\nQuestions? WhatsApp or call us on 061 401 1426, or reply to this email.\n\n"

@@ -9,7 +9,7 @@ services:
     plan: starter
     region: frankfurt
     buildCommand: pip install -r requirements.txt
-    preDeployCommand: flask --app wsgi db upgrade
+    preDeployCommand: flask --app wsgi db upgrade && flask --app wsgi storage init
     startCommand: gunicorn wsgi:app --workers 2 --timeout 60 --bind 0.0.0.0:$PORT
     healthCheckPath: /health
     envVars:
@@ -24,9 +24,9 @@ services:
       - key: STORAGE_BACKEND
         value: supabase
       - key: CORS_ORIGINS
-        value: https://cashflowloans.co.za,https://www.cashflowloans.co.za,https://crm.cashflowloans.co.za
+        value: https://cashflowloans.co.za,https://www.cashflowloans.co.za,https://crm.cashflowloans.co.za,https://website-pi-cyan-29.vercel.app
       - key: SUPABASE_URL
-        sync: false
+        value: https://qazfvknrhrcewgosljgf.supabase.co
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
       - key: STAFF_EMAILS

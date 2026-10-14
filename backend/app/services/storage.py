@@ -20,9 +20,29 @@ class SupabaseStorage:
     def __init__(self, url: str, service_key: str, bucket: str):
         self.base = f"{url}/storage/v1"
         self.bucket = bucket
-        self.http = httpx.Client(
-            headers={"Authorization": f"Bearer {service_key}", "apikey": service_key}, timeout=30
+        # New-style secret keys (sb_secret_…) go in `apikey` only; the gateway turns them into a
+        # service-role token. Legacy service_role keys are JWTs and also go in Authorization.
+        headers = {"apikey": service_key}
+        if not service_key.startswith("sb_"):
+            headers["Authorization"] = f"Bearer {service_key}"
+        self.http = httpx.Client(headers=headers, timeout=30)
+
+    def ensure_bucket(self) -> str:
+        """Create the private documents bucket if it doesn't exist. Safe to run on every deploy."""
+        if self.http.get(f"{self.base}/bucket/{self.bucket}").status_code == 200:
+            return "exists"
+        res = self.http.post(
+            f"{self.base}/bucket",
+            json={
+                "id": self.bucket,
+                "name": self.bucket,
+                "public": False,
+                "file_size_limit": 10 * 1024 * 1024,
+                "allowed_mime_types": ["application/pdf", "image/jpeg", "image/png", "image/webp"],
+            },
         )
+        res.raise_for_status()
+        return "created"
 
     def upload(self, path: str, data: bytes, content_type: str) -> None:
         res = self.http.post(

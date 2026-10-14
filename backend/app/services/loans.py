@@ -174,8 +174,8 @@ def pay_out(loan: Loan, actor: str, *, paid_out_on: date | None, due_date: date 
     record(
         loan.client,
         "loan_paid_out",
-        f"Paid out {emails.rand(loan.principal)} on {paid_out_on.isoformat()}, "
-        f"{emails.rand(loan.total_repayable)} due {due_date.isoformat()}",
+        f"Paid out {emails.rand(loan.principal)} on {emails.short_date(paid_out_on)}, "
+        f"{emails.rand(loan.total_repayable)} due {emails.short_date(due_date)}",
         actor,
         application=loan.application,
         loan=loan,
@@ -224,7 +224,7 @@ def record_payment(
     ).balance
     if amount > owed:
         raise ApiError(
-            f"That's more than the {emails.rand(owed)} owed on {paid_on.isoformat()}.",
+            f"That's more than the {emails.rand(owed)} owed on {emails.short_date(paid_on)}.",
             422,
             {"amount": [f"At most {emails.rand(owed)}"]},
         )
@@ -244,7 +244,7 @@ def record_payment(
     record(
         loan.client,
         "payment",
-        f"Payment of {emails.rand(amount)} ({method}) on {paid_on.isoformat()}; "
+        f"Payment of {emails.rand(amount)} ({method}) on {emails.short_date(paid_on)}; "
         f"balance {emails.rand(ledger.balance)}",
         actor,
         application=loan.application,
@@ -267,7 +267,7 @@ def delete_payment(loan: Loan, payment: Payment, actor: str) -> None:
     record(
         loan.client,
         "payment_deleted",
-        f"Removed payment of {emails.rand(payment.amount)} from {payment.paid_on.isoformat()}",
+        f"Removed payment of {emails.rand(payment.amount)} from {emails.short_date(payment.paid_on)}",
         actor,
         application=loan.application,
         loan=loan,

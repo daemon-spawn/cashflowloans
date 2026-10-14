@@ -84,7 +84,8 @@ def create_application(
     record(
         client,
         "application_created",
-        f"Application {application.reference} for R{application.amount} via {source.value.replace('_', ' ')}",
+        f"Application {application.reference} for R{application.amount:,.2f}"
+        f" via {source.value.replace('_', ' ')}",
         actor or "applicant",
         application=application,
     )

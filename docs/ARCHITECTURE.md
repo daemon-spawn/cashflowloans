@@ -35,6 +35,22 @@ Staff ──▶ CRM ──Supabase JWT──▶ /v1/* (JWKS verified + STAFF_EMA
 - **Nothing is deleted to say no.** Declining keeps the application with its reason; the old CRM deleted the client.
 - **Everything is logged.** Each status change, payout, payment, write-off, collateral update and contact edit writes an `activities` row with the staff member's email.
 
+## CRM screens
+
+| Screen | What staff do there | Old CRM equivalent |
+|---|---|---|
+| Overview | Outstanding, overdue, to review, awaiting payout; who to call today; repayment rate | Dashboard |
+| Applications | Drag-and-drop board (new → in review → approved / declined) and a searchable list; enter phone and WhatsApp applications | Pipeline, New Client modal |
+| Application | Documents, missing-document and blacklist warnings, borrowing history, approve / decline, notes, history | Client modal (new lead) |
+| Loans | Tabs by status with search | Pipeline columns |
+| Loan | Balance, mark paid out, record payments (with "pay off"), statement, collateral, write-off, notes, history | Client modal (record payment) |
+| Clients / Client | Search, filter, sort, CSV export; contact edits, blacklist, documents, new loan for a repeat client | All Clients, Add Additional Loan |
+| Messages | Website enquiries, mark handled | — |
+| Reports | Period totals, top 20 clients by amount repaid, CSV export | Analytics |
+| Settings | Staff list, email status, send a test email, run the reminders now | Notifications |
+
+Uploads go from the browser straight to the API (documents are up to 10 MB; Vercel functions accept 4.5 MB). Everything else goes through server actions with the staff member's token.
+
 ## Loan lifecycle
 
 ```
@@ -65,7 +81,6 @@ Each reminder is recorded in `reminder_logs`, so re-running the job sends nothin
 
 ## Still to build
 
-- CRM screens for the endpoints above.
 - CRM-managed content: FAQ, testimonials and blog.
 - Website: redesign, blog article migration, legal copy, Turnstile widget and testimonials.
 - Content from the owner: testimonials, final terms and privacy policy.

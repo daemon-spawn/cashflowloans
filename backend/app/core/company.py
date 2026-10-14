@@ -3,3 +3,4 @@
 NAME = "Cashflow Loans"
 EMAIL = "info@cashflowloans.co.za"
 PHONE = "+27614011426"
+NCR_NUMBER = "NCRCP22656"

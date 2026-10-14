@@ -4,7 +4,7 @@ import type { LegalDocument } from "./types";
 
 /**
  * Built only from what the site and the original Terms already state.
- * TODO: owner review before launch (Information Officer name, retention periods, NCR number).
+ * TODO: owner review before launch (Information Officer name, retention periods).
  */
 export const privacy: LegalDocument = {
   intro: [
@@ -74,7 +74,7 @@ export const privacy: LegalDocument = {
       clauses: [
         {
           text: "For any questions about your personal information, please contact Cashflow Loans at:",
-          list: [`Phone: ${company.phoneDisplay}`, `Email: ${company.email}`],
+          list: [`Phone: ${company.phoneDisplay}`, `Email: ${company.email}`, `NCR registration number: ${company.ncrNumber}`],
         },
       ],
     },

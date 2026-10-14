@@ -5,8 +5,8 @@
 export const company = {
   name: "Cashflow Loans",
   legalName: "Cashflow Loans",
-  // TODO: owner to supply NCR registration number (NCRCP…)
-  ncrNumber: null as string | null,
+  /** National Credit Regulator registration number. */
+  ncrNumber: "NCRCP22656" as string | null,
   email: "info@cashflowloans.co.za",
   phone: "+27614011426",
   phoneDisplay: "061 401 1426",

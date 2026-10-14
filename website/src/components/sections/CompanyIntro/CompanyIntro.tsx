@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { company } from "@cashflow/core";
 
 import { Container } from "@/components/shared/Container";
 import { Highlight } from "@/components/shared/Highlight";
@@ -34,6 +35,7 @@ export function CompanyIntro() {
                 <div>
                   <p className="font-medium">Certified Company</p>
                   <p className="text-sm text-white/60">Approved Finance company to provide loans</p>
+                  {company.ncrNumber && <p className="text-sage mt-1 text-sm font-medium">NCR reg. no. {company.ncrNumber}</p>}
                 </div>
               </div>
             </div>

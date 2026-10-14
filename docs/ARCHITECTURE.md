@@ -37,5 +37,5 @@ Staff ──▶ CRM ──Supabase JWT──▶ /v1/* (JWKS verified + STAFF_EMA
 
 - CRM: pipeline drag-and-drop, client and loan detail pages, recording payments and payouts, notes, analytics.
 - API: staff endpoints for clients, loans, payments, notes; the daily due/overdue job (Render Cron).
-- Website: redesign, blog article migration, legal copy, Turnstile widget, NCR number and testimonials.
-- Content from the owner: NCR registration number, testimonials, final terms and privacy policy.
+- Website: redesign, blog article migration, legal copy, Turnstile widget and testimonials.
+- Content from the owner: testimonials, final terms and privacy policy.

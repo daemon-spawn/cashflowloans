@@ -2,7 +2,7 @@
  * FAQ, word for word from the original site (legacy/src/index.html), plus one
  * question on late payment that states the loan rule. Moves to the CRM later.
  */
-import type { LoanType } from "@cashflow/core";
+import { company, type LoanType } from "@cashflow/core";
 
 export type FaqItem = {
   question: string;
@@ -68,6 +68,7 @@ export const faq: readonly FaqItem[] = [
     question: "Is Cashflow Loans a registered credit provider?",
     answer: [
       "Yes, Cashflow Loans is a licensed credit provider registered with the National Credit Regulator (NCR), ensuring compliance with all applicable regulations and a commitment to responsible lending practices.",
+      `Our NCR registration number is **${company.ncrNumber}**.`,
     ],
   },
   {

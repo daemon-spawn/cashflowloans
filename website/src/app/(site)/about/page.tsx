@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { company } from "@cashflow/core";
 import { Button } from "@cashflow/ui/components/button";
 
 import { Container } from "@/components/shared/Container";
@@ -81,6 +82,7 @@ export default function AboutPage() {
               <div>
                 <p className="font-medium">Certified Company</p>
                 <p className="text-sm text-white/60">Approved Finance company to provide loans</p>
+                  {company.ncrNumber && <p className="text-sage mt-1 text-sm font-medium">NCR reg. no. {company.ncrNumber}</p>}
               </div>
             </div>
           </div>

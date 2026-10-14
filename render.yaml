@@ -1,4 +1,4 @@
-# Render Blueprint — API + Postgres. Website and CRM deploy on Vercel.
+# Render Blueprint — API, daily reminders job and Postgres. Website and CRM deploy on Vercel.
 # Paid "starter" plans: the free tier sleeps, and a sleeping API is what
 # silently lost applications on the old site.
 services:
@@ -39,6 +39,40 @@ services:
         sync: false
       - key: SMTP_PASSWORD
         sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: NOTIFY_EMAIL
+        value: info@cashflowloans.co.za
+
+  # Daily at 07:00 UTC = 09:00 in South Africa: refreshes loan statuses, emails
+  # borrowers whose repayment is due tomorrow, today or overdue, and sends the
+  # owner one summary. Safe to re-run: each reminder is sent once.
+  - type: cron
+    name: cashflow-reminders
+    runtime: python
+    rootDir: backend
+    plan: starter
+    region: frankfurt
+    schedule: "0 7 * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: flask --app wsgi reminders run
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.1
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cashflow-db
+          property: connectionString
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: NOTIFY_EMAIL
+        value: info@cashflowloans.co.za
 
 databases:
   - name: cashflow-db

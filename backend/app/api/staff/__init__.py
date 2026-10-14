@@ -13,4 +13,4 @@ def _authenticate():
         authenticate_staff()
 
 
-from app.api.staff import applications, messages  # noqa: E402, F401
+from app.api.staff import applications, clients, loans, messages, reports  # noqa: E402, F401

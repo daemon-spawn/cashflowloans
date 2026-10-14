@@ -17,6 +17,7 @@ class Note(Model):
 
     client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), index=True)
     application_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("applications.id"))
+    loan_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("loans.id", ondelete="SET NULL"))
     body: Mapped[str] = mapped_column(Text)
     author_email: Mapped[str] = mapped_column(String(255))
 

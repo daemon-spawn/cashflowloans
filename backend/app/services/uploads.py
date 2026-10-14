@@ -50,38 +50,62 @@ def _sniff(data: bytes) -> tuple[str, str] | None:
     return None
 
 
-def collect_uploads(files: MultiDict[str, FileStorage], loan_type: LoanType) -> list[UploadedFile]:
+def _validate(
+    item: FileStorage, field: str, errors: dict[str, list[str]]
+) -> tuple[bytes, tuple[str, str]] | None:
+    data = item.read(MAX_FILE_BYTES + 1)
+    if len(data) > MAX_FILE_BYTES:
+        errors.setdefault(field, []).append(f"{item.filename} is larger than 10 MB")
+        return None
+    sniffed = _sniff(data)
+    images_only = field == "collateralImages"
+    pdf_only = field == "bankStatement"
+    if (
+        not sniffed
+        or (images_only and not sniffed[0].startswith("image/"))
+        or (pdf_only and sniffed[0] != "application/pdf")
+    ):
+        errors.setdefault(field, []).append(f"{item.filename} is not a supported file type")
+        return None
+    return data, sniffed
+
+
+def collect_uploads(
+    files: MultiDict[str, FileStorage], loan_type: LoanType, *, required: bool = True
+) -> list[UploadedFile]:
+    """Application documents. Staff-entered applications (phone, WhatsApp) may add them later."""
     errors: dict[str, list[str]] = {}
     result: list[UploadedFile] = []
 
     for field in REQUIRED_FIELDS[loan_type]:
         items = [f for f in files.getlist(field) if f and f.filename]
         if not items:
-            errors[field] = ["This document is required"]
+            if required:
+                errors[field] = ["This document is required"]
             continue
         if field == "collateralImages" and len(items) > MAX_COLLATERAL_IMAGES:
             errors[field] = [f"Upload at most {MAX_COLLATERAL_IMAGES} photos"]
             continue
 
         for item in items:
-            data = item.read(MAX_FILE_BYTES + 1)
-            if len(data) > MAX_FILE_BYTES:
-                errors.setdefault(field, []).append(f"{item.filename} is larger than 10 MB")
-                continue
-            sniffed = _sniff(data)
-            images_only = field == "collateralImages"
-            pdf_only = field == "bankStatement"
-            if (
-                not sniffed
-                or (images_only and not sniffed[0].startswith("image/"))
-                or (pdf_only and sniffed[0] != "application/pdf")
-            ):
-                errors.setdefault(field, []).append(f"{item.filename} is not a supported file type")
-                continue
-            result.append(
-                UploadedFile(field, FIELD_KINDS[field], item.filename, sniffed[0], sniffed[1], data)
-            )
+            if checked := _validate(item, field, errors):
+                data, (content_type, ext) = checked
+                result.append(UploadedFile(field, FIELD_KINDS[field], item.filename, content_type, ext, data))
 
     if errors:
         raise ApiError("Please check your documents.", 422, errors)
     return result
+
+
+def collect_single(files: MultiDict[str, FileStorage], kind: DocumentKind) -> UploadedFile:
+    """One document added by staff from the CRM."""
+    item = files.get("file")
+    if not item or not item.filename:
+        raise ApiError("Choose a file to upload.", 422, {"file": ["Required"]})
+    field = next((f for f, k in FIELD_KINDS.items() if k == kind), "file")
+    errors: dict[str, list[str]] = {}
+    checked = _validate(item, field, errors)
+    if not checked:
+        raise ApiError("Please check the file.", 422, {"file": errors.get(field, ["Unsupported file"])})
+    data, (content_type, ext) = checked
+    return UploadedFile("file", kind, item.filename, content_type, ext, data)

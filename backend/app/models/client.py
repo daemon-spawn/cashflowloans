@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import String
+from sqlalchemy import Boolean, DateTime, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Model
@@ -21,6 +22,10 @@ class Client(Model):
     id_number: Mapped[str] = mapped_column(String(13), unique=True, index=True)
     email: Mapped[str] = mapped_column(String(255), index=True)
     phone: Mapped[str] = mapped_column(String(20))
+    # Set by staff after non-payment (see Terms 2.1). Approving a blacklisted client needs an override.
+    blacklisted: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    blacklist_reason: Mapped[str | None] = mapped_column(Text)
+    blacklisted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     applications: Mapped[list[Application]] = relationship(
         back_populates="client", order_by="Application.created_at.desc()"

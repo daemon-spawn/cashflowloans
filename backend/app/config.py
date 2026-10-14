@@ -34,6 +34,7 @@ class Config:
     SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
     SMTP_USERNAME = os.getenv("SMTP_USERNAME", "")
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+    SMTP_FROM = os.getenv("SMTP_FROM", "")  # e.g. "Cashflow Loans <info@cashflowloans.co.za>"
     NOTIFY_EMAIL = os.getenv("NOTIFY_EMAIL", "info@cashflowloans.co.za")
 
     RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "memory://")
@@ -42,9 +43,11 @@ class Config:
 
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite://"
+    # Set TEST_DATABASE_URL to run the suite against Postgres (it is wiped on every test).
+    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL", "sqlite://")
     SQLALCHEMY_ENGINE_OPTIONS = {}
     STORAGE_BACKEND = "memory"
     STAFF_EMAILS = {"owner@example.com"}
     TURNSTILE_SECRET_KEY = ""
     RATELIMIT_ENABLED = False
+    SMTP_HOST = ""

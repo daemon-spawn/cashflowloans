@@ -3,6 +3,7 @@ import { cn } from "@cashflow/ui/lib/utils";
 
 const styles: Record<ApplicationStatus | LoanStatus, string> = {
   new: "bg-blue-100 text-blue-800",
+  pending_payout: "bg-violet-100 text-violet-800",
   in_review: "bg-amber-100 text-amber-800",
   approved: "bg-brand-100 text-brand-900",
   declined: "bg-neutral-200 text-neutral-700",

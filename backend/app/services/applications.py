@@ -7,9 +7,10 @@ from sqlalchemy import select
 
 from app.core.errors import ApiError
 from app.extensions import db
-from app.models import Application, Client, Document
+from app.models import Application, ApplicationSource, Client, Document
 from app.models.base import utcnow
 from app.schemas.application import ApplicationIn
+from app.services.activity import record
 from app.services.notifications import notify_owner
 from app.services.storage import get_storage
 from app.services.uploads import UploadedFile
@@ -34,7 +35,36 @@ def upsert_client(data: ApplicationIn) -> Client:
     return client
 
 
-def create_application(data: ApplicationIn, uploads: list[UploadedFile]) -> Application:
+def store_documents(
+    client: Client, application: Application | None, uploads: list[UploadedFile], uploaded: list[str]
+) -> None:
+    """Uploads files and adds Document rows; each stored path goes into `uploaded` for cleanup."""
+    storage = get_storage()
+    folder = f"clients/{client.id}" + (f"/applications/{application.id}" if application else "/documents")
+    for f in uploads:
+        path = f"{folder}/{f.kind.value}-{uuid.uuid4().hex[:8]}.{f.extension}"
+        storage.upload(path, f.data, f.content_type)
+        uploaded.append(path)
+        db.session.add(
+            Document(
+                client=client,
+                application=application,
+                kind=f.kind,
+                storage_path=path,
+                original_filename=f.filename[:255],
+                content_type=f.content_type,
+                size_bytes=len(f.data),
+            )
+        )
+
+
+def create_application(
+    data: ApplicationIn,
+    uploads: list[UploadedFile],
+    *,
+    source: ApplicationSource = ApplicationSource.WEBSITE,
+    actor: str | None = None,
+) -> Application:
     storage = get_storage()
     client = upsert_client(data)
     db.session.flush()
@@ -47,27 +77,21 @@ def create_application(data: ApplicationIn, uploads: list[UploadedFile]) -> Appl
         amount=data.amount,
         requested_repayment_date=data.repayment_date,
         accepted_terms_at=utcnow(),
+        source=source.value,
     )
     db.session.add(application)
+    db.session.flush()
+    record(
+        client,
+        "application_created",
+        f"Application {application.reference} for R{application.amount} via {source.value.replace('_', ' ')}",
+        actor or "applicant",
+        application=application,
+    )
 
     uploaded: list[str] = []
     try:
-        for f in uploads:
-            folder = f"clients/{client.id}/applications/{application.id}"
-            path = f"{folder}/{f.kind.value}-{uuid.uuid4().hex[:8]}.{f.extension}"
-            storage.upload(path, f.data, f.content_type)
-            uploaded.append(path)
-            db.session.add(
-                Document(
-                    client=client,
-                    application=application,
-                    kind=f.kind,
-                    storage_path=path,
-                    original_filename=f.filename[:255],
-                    content_type=f.content_type,
-                    size_bytes=len(f.data),
-                )
-            )
+        store_documents(client, application, uploads, uploaded)
         db.session.commit()
     except Exception as exc:
         # All or nothing: never keep an application whose documents are missing.
@@ -75,6 +99,8 @@ def create_application(data: ApplicationIn, uploads: list[UploadedFile]) -> Appl
         storage.delete(uploaded)
         raise ApiError("We couldn't save your documents. Please try again.", 503) from exc
 
+    if source != ApplicationSource.WEBSITE:
+        return application  # staff entered it, so they already know
     notify_owner(
         f"New {application.loan_type.value} application {application.reference} — R{application.amount}",
         f"{client.full_name} ({client.phone}, {client.email}) applied for R{application.amount}.\n"

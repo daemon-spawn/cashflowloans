@@ -27,4 +27,8 @@ def create_app(config: type[Config] = Config) -> Flask:
     init_storage(app)
     register_error_handlers(app)
     register_blueprints(app)
+
+    from app.cli import reminders_cli
+
+    app.cli.add_command(reminders_cli)
     return app

@@ -5,7 +5,7 @@ from datetime import date
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Date, ForeignKey, String
+from sqlalchemy import Date, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Model, Money
@@ -22,6 +22,7 @@ class Payment(Model):
     paid_on: Mapped[date] = mapped_column(Date)
     method: Mapped[str] = mapped_column(String(30), default="eft")  # eft, debicheck, cash
     reference: Mapped[str | None] = mapped_column(String(100))
+    notes: Mapped[str | None] = mapped_column(Text)
     recorded_by: Mapped[str | None] = mapped_column(String(255))
 
     loan: Mapped[Loan] = relationship(back_populates="payments")

@@ -16,11 +16,29 @@ class ApplicationStatus(enum.StrEnum):
 
 
 class LoanStatus(enum.StrEnum):
+    """Derived from the ledger by app.core.ledger.loan_status; stored for filtering."""
+
+    PENDING_PAYOUT = "pending_payout"  # approved, money not yet sent
     ACTIVE = "active"
     DUE = "due"
     OVERDUE = "overdue"
     PAID = "paid"
     WRITTEN_OFF = "written_off"
+
+
+class CollateralStatus(enum.StrEnum):
+    AWAITING_COLLECTION = "awaiting_collection"
+    HELD = "held"
+    RETURNED = "returned"
+    SOLD = "sold"
+
+
+class ApplicationSource(enum.StrEnum):
+    WEBSITE = "website"
+    WHATSAPP = "whatsapp"
+    PHONE = "phone"
+    EMAIL = "email"
+    WALK_IN = "walk_in"
 
 
 class DocumentKind(enum.StrEnum):

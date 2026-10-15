@@ -42,7 +42,7 @@ services:
       - key: SMTP_FROM
         sync: false
       - key: NOTIFY_EMAIL
-        value: info@cashflowloans.co.za
+        value: cashflowloans.enquiry@gmail.com
 
   # Daily at 07:00 UTC = 09:00 in South Africa: refreshes loan statuses, emails
   # borrowers whose repayment is due tomorrow, today or overdue, and sends the
@@ -72,7 +72,7 @@ services:
       - key: SMTP_FROM
         sync: false
       - key: NOTIFY_EMAIL
-        value: info@cashflowloans.co.za
+        value: cashflowloans.enquiry@gmail.com
 
 databases:
   - name: cashflow-db

@@ -35,7 +35,7 @@ class Config:
     SMTP_USERNAME = os.getenv("SMTP_USERNAME", "")
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
     SMTP_FROM = os.getenv("SMTP_FROM", "")  # e.g. "Cashflow Loans <info@cashflowloans.co.za>"
-    NOTIFY_EMAIL = os.getenv("NOTIFY_EMAIL", "info@cashflowloans.co.za")
+    NOTIFY_EMAIL = os.getenv("NOTIFY_EMAIL", "cashflowloans.enquiry@gmail.com")
 
     RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "memory://")
     RATELIMIT_HEADERS_ENABLED = True

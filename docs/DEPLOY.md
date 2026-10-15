@@ -1,64 +1,120 @@
-# Deploying
+# Deploying, step by step
 
-Three places: **Supabase** (staff logins, documents), **Render** (API, database, daily reminders) and **Vercel** (website, CRM). Secret values go only in those dashboards, never in this repo.
+Order: **Supabase → Gmail app password → Render → Vercel → domains.** Secret values go only in those dashboards, never in this repo.
 
-## 1. Supabase — project `qazfvknrhrcewgosljgf`
+What you need open: the Supabase project `qazfvknrhrcewgosljgf`, the owner's Google account (cashflowloans.enquiry@gmail.com), a Render account, and Vercel.
 
-1. **Authentication → Sign In / Providers → Email:** turn **off** "Allow new users to sign up". Only staff should have accounts.
-2. **Authentication → Users → Add user → Create new user** for each staff member (owner and developer), with a password and *Auto Confirm User* ticked. Use the same emails as `STAFF_EMAILS` below.
-3. **Authentication → URL Configuration:** Site URL = the CRM's address (e.g. `https://crm.cashflowloans.co.za`).
-4. Storage needs nothing: the API creates the private `documents` bucket on its first deploy (`flask storage init`).
+---
 
-## 2. Render — Blueprint
+## 1. Supabase (5 minutes)
 
-**New → Blueprint → connect this repo.** `render.yaml` creates:
+Supabase handles staff logins for the CRM and stores the uploaded documents.
 
-| Service | Plan | What it is |
-|---|---|---|
-| `cashflow-api` | Starter | Flask API. Runs migrations and creates the storage bucket before each deploy. |
-| `cashflow-reminders` | Cron (Starter) | 09:00 SAST daily: due/overdue emails and the owner summary. |
-| `cashflow-db` | Postgres basic-256mb | The database. |
+1. Open https://supabase.com/dashboard/project/qazfvknrhrcewgosljgf
+2. **Stop public sign-ups.** Left menu **Authentication → Sign In / Providers**. Under *User Signups*, turn **off** "Allow new users to sign up" and **Save**. Only the two staff accounts below should exist.
+3. **Create the owner's login.** **Authentication → Users → Add user → Create new user**
+   - Email: `cashflowloans.enquiry@gmail.com`
+   - Password: a strong password (give it to the owner privately)
+   - Tick **Auto Confirm User**, then **Create user**
+4. **Create the developer's login.** Same again with `syloncube837@gmail.com`.
+5. **Copy two keys** from **Project Settings → API Keys** (keep this tab open for step 3):
+   - **Secret key**, starts with `sb_secret_…` (click to reveal). Goes to **Render**.
+   - **Publishable key**, starts with `sb_publishable_…`. Goes to **Vercel** (CRM).
 
-Render asks for the values marked `sync: false`:
+Nothing to set up in Storage: the API creates the private `documents` bucket itself on its first deploy.
 
-| Variable | `cashflow-api` | `cashflow-reminders` | Value |
-|---|---|---|---|
-| `SUPABASE_SERVICE_ROLE_KEY` | ✓ | | Supabase **secret key** (`sb_secret_…`), from Project Settings → API Keys |
-| `STAFF_EMAILS` | ✓ | | Comma-separated staff emails, same as the Supabase users |
-| `TURNSTILE_SECRET_KEY` | ✓ | | Cloudflare Turnstile secret (leave empty until Turnstile is set up) |
-| `SMTP_HOST`, `SMTP_USERNAME`, `SMTP_PASSWORD` | ✓ | ✓ | The mailbox that sends email (e.g. info@cashflowloans.co.za's SMTP settings) |
-| `SMTP_FROM` | ✓ | ✓ | e.g. `Cashflow Loans <info@cashflowloans.co.za>` |
+---
 
-`SUPABASE_URL`, `CORS_ORIGINS`, `NOTIFY_EMAIL` and the database connection are set by the Blueprint. Add the CRM's Vercel address to `CORS_ORIGINS` once it exists (document uploads go from the CRM in the browser straight to the API).
+## 2. Gmail app password (3 minutes, optional for now)
 
-Check: `https://cashflow-api.onrender.com/health` returns `{"status":"ok"}`.
+The system sends emails (approvals, reminders, the daily summary) from the owner's Gmail. Google needs an *app password* for that, not the normal password. You can skip this and add it later; everything else works without email.
 
-## 3. Vercel
+1. Sign in as `cashflowloans.enquiry@gmail.com` at https://myaccount.google.com/security
+2. Turn on **2-Step Verification** if it isn't on.
+3. Open https://myaccount.google.com/apppasswords, name it `Cashflow CRM`, click **Create**.
+4. Copy the 16-character password (spaces don't matter). Google shows it once.
 
-**Website** (existing project, root directory `website`):
+---
 
-| Variable | Value |
+## 3. Render Blueprint (10 minutes + about 5 minutes building)
+
+Render runs the API, the database and the daily 09:00 reminder job. `render.yaml` in this repo describes all of it.
+
+1. Go to https://dashboard.render.com and sign up with **GitHub**.
+2. When GitHub asks which repositories Render can see, allow **daemon-spawn/cashflowloans** (or all repositories).
+3. Add a payment card under **Account → Billing**. The services are paid Starter plans (about $15/month in total), because a free API goes to sleep and loses applications.
+4. Click **New + → Blueprint**.
+5. Choose the **cashflowloans** repository, branch **master**. Blueprint name: `cashflowloans`.
+6. Render lists what it will create:
+   - **cashflow-api**: web service (the API)
+   - **cashflow-reminders**: cron job (daily emails at 09:00 South African time)
+   - **cashflow-db**: Postgres database
+7. Render then asks for the values that aren't stored in the repo. Fill them in like this:
+
+   **cashflow-api**
+
+   | Key | Value |
+   |---|---|
+   | `SUPABASE_SERVICE_ROLE_KEY` | the Supabase **secret key** (`sb_secret_…`) from step 1.5 |
+   | `STAFF_EMAILS` | `cashflowloans.enquiry@gmail.com,syloncube837@gmail.com` |
+   | `TURNSTILE_SECRET_KEY` | leave **empty** |
+   | `SMTP_HOST` | `smtp.gmail.com` (or empty if you skipped step 2) |
+   | `SMTP_USERNAME` | `cashflowloans.enquiry@gmail.com` (or empty) |
+   | `SMTP_PASSWORD` | the 16-character app password from step 2 (or empty) |
+   | `SMTP_FROM` | `Cashflow Loans <cashflowloans.enquiry@gmail.com>` (or empty) |
+
+   **cashflow-reminders**: the same four `SMTP_*` values (or empty).
+
+   These are already filled in by the Blueprint, so leave them: `SUPABASE_URL`, `DATABASE_URL`, `SECRET_KEY`, `STORAGE_BACKEND`, `CORS_ORIGINS`, `NOTIFY_EMAIL` (`cashflowloans.enquiry@gmail.com`, where new-application alerts and the daily summary go).
+8. Click **Deploy Blueprint**. The database comes up first, then the API builds. Before the API starts it creates the tables and the documents bucket.
+9. **Check it.** Open **cashflow-api** in the dashboard and copy its address at the top (e.g. `https://cashflow-api.onrender.com`; Render may add a suffix if the name is taken). Open that address with `/health` on the end. It should show `{"status":"ok"}`.
+10. **Send the API address to the developer** for the next step.
+
+If a deploy fails, open the service, go to **Logs**, and copy the red error.
+
+To add or change email settings later: open the service → **Environment** → edit → **Save changes**. It redeploys by itself.
+
+---
+
+## 4. Vercel (after the API is live)
+
+**Website** (the existing project, root directory `website`): **Settings → Environment Variables**, Production:
+
+| Key | Value |
 |---|---|
-| `NEXT_PUBLIC_API_URL` | `https://cashflow-api.onrender.com` |
-| `NEXT_PUBLIC_SITE_URL` | `https://cashflowloans.co.za` |
+| `NEXT_PUBLIC_API_URL` | the API address from step 3.9, no trailing slash |
+| `NEXT_PUBLIC_SITE_URL` | `https://cashflowloans.co.za` (once the domain points at Vercel) |
 
-**CRM** (new project from the same repo, root directory `crm`):
+Then **Deployments → ⋯ → Redeploy**. `NEXT_PUBLIC_*` values are built into the pages, so a redeploy is needed.
 
-| Variable | Value |
+**CRM** (new project): **Add New → Project →** import `daemon-spawn/cashflowloans` → **Root Directory: `crm`** → add:
+
+| Key | Value |
 |---|---|
-| `NEXT_PUBLIC_API_URL` | `https://cashflow-api.onrender.com` |
+| `NEXT_PUBLIC_API_URL` | the API address from step 3.9 |
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://qazfvknrhrcewgosljgf.supabase.co` |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase **publishable key** (`sb_publishable_…`) |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | the Supabase **publishable key** (`sb_publishable_…`) |
 
-Redeploy after changing `NEXT_PUBLIC_*` values: they are built into the pages.
+→ **Deploy**. Send the CRM's Vercel address to the developer: it has to be added to the API's `CORS_ORIGINS` so document uploads from the CRM work.
 
-## 4. Domains (domains.co.za)
+Finally, in Supabase **Authentication → URL Configuration**, set **Site URL** to the CRM's address.
 
-- `cashflowloans.co.za` and `www` → the website project (Vercel shows the DNS records to add).
-- `crm.cashflowloans.co.za` → the CRM project.
+---
 
-## After go-live
+## 5. Domains (domains.co.za)
 
-- Sign in to the CRM, open **Settings** and use **Send test email**.
-- Submit a test application on the website and check it arrives on the Applications board.
-- Rotate the Supabase secret key if it was ever shared outside the dashboards, and update `SUPABASE_SERVICE_ROLE_KEY` on Render.
+In each Vercel project, **Settings → Domains → Add**, then add the DNS records Vercel shows at domains.co.za:
+
+- Website project: `cashflowloans.co.za` and `www.cashflowloans.co.za`
+- CRM project: `crm.cashflowloans.co.za`
+
+`CORS_ORIGINS` already allows all three.
+
+---
+
+## 6. Go-live checks
+
+1. Sign in to the CRM as the owner.
+2. **Settings → Send test email.** It should arrive at cashflowloans.enquiry@gmail.com.
+3. Submit a small test application on the website. It appears on the CRM's **Applications** board, and an alert email arrives.
+4. Rotate the Supabase secret key (Project Settings → API Keys) since it was shared in chat, and paste the new one into `SUPABASE_SERVICE_ROLE_KEY` on Render.
